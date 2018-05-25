@@ -1,0 +1,304 @@
+******************************************************************************
+                  TI ARM Linker PC v5.1.6                      
+******************************************************************************
+>> Linked Wed Apr 22 15:52:47 2015
+
+OUTPUT FILE NAME:   <LCD_SD_Test2.out>
+ENTRY POINT SYMBOL: "_c_int00"  address: 000017ad
+
+
+MEMORY CONFIGURATION
+
+         name            origin    length      used     unused   attr    fill
+----------------------  --------  ---------  --------  --------  ----  --------
+  FLASH                 00000000   00100000  00001cf8  000fe308  R  X
+  SRAM                  20000000   00040000  00001a3c  0003e5c4  RW X
+
+
+SEGMENT ALLOCATION MAP
+
+run origin  load origin   length   init length attrs members
+----------  ----------- ---------- ----------- ----- -------
+00000000    00000000    00001cf8   00001cf8    r-x
+  00000000    00000000    00000208   00000208    r-- .intvecs
+  00000208    00000208    000018f4   000018f4    r-x .text
+  00001afc    00001afc    000001c4   000001c4    r-- .const
+  00001cc0    00001cc0    00000038   00000038    r-- .cinit
+20000000    20000000    00001a3c   00000000    rw-
+  20000000    20000000    00001228   00000000    rw- .bss
+  20001228    20001228    00000800   00000000    rw- .stack
+  20001a28    20001a28    00000014   00000000    rw- .data
+
+
+SECTION ALLOCATION MAP
+
+ output                                  attributes/
+section   page    origin      length       input sections
+--------  ----  ----------  ----------   ----------------
+.intvecs   0    00000000    00000208     
+                  00000000    00000208     tm4c129xnczad_startup_ccs.obj (.intvecs)
+
+.init_array 
+*          0    00000000    00000000     UNINITIALIZED
+
+.text      0    00000208    000018f4     
+                  00000208    000006e0     main.obj (.text)
+                  000008e8    000005c8     pinout.obj (.text)
+                  00000eb0    00000328     mx66l51235f.obj (.text)
+                  000011d8    000001fc     driverlib.lib : sysctl.obj (.text:SysCtlClockFreqSet)
+                  000013d4    00000130                   : gpio.obj (.text:GPIOPadConfigSet)
+                  00001504    0000009c     rtsv7M4_T_le_v4SPD16_eabi.lib : memcpy_t2.obj (.text)
+                  000015a0    00000094                                   : auto_init.obj (.text)
+                  00001634    00000080     driverlib.lib : udma.obj (.text:uDMAChannelTransferSet)
+                  000016b4    0000005e     rtsv7M4_T_le_v4SPD16_eabi.lib : copy_decompress_rle.obj (.text)
+                  00001712    00000002     --HOLE-- [fill = 0]
+                  00001714    00000050     driverlib.lib : sysctl.obj (.text:SysCtlPeripheralReset)
+                  00001764    00000048                   : sysctl.obj (.text:_SysCtlFrequencyGet)
+                  000017ac    00000048     rtsv7M4_T_le_v4SPD16_eabi.lib : boot.obj (.text)
+                  000017f4    00000048     driverlib.lib : udma.obj (.text:uDMAChannelAttributeDisable)
+                  0000183c    00000044     rtsv7M4_T_le_v4SPD16_eabi.lib : cpy_tbl.obj (.text)
+                  00001880    00000044                                   : exit.obj (.text)
+                  000018c4    00000036     driverlib.lib : lcd.obj (.text:LCDIDDTimingSet)
+                  000018fa    00000002     --HOLE-- [fill = 0]
+                  000018fc    00000034                   : sysctl.obj (.text:SysCtlPeripheralEnable)
+                  00001930    0000002a                   : gpio.obj (.text:GPIODirModeSet)
+                  0000195a    00000002     --HOLE-- [fill = 0]
+                  0000195c    00000024                   : udma.obj (.text:uDMAChannelControlSet)
+                  00001980    00000022                   : lcd.obj (.text:LCDModeSet)
+                  000019a2    00000002     --HOLE-- [fill = 0]
+                  000019a4    0000001c                   : sysctl.obj (.text:_SysCtlMemTimingGet)
+                  000019c0    00000018                   : gpio.obj (.text:GPIOPinTypeGPIOOutput)
+                  000019d8    00000018     rtsv7M4_T_le_v4SPD16_eabi.lib : args_main.obj (.text)
+                  000019f0    00000018     driverlib.lib : udma.obj (.text:uDMAChannelEnable)
+                  00001a08    00000014     rtsv7M4_T_le_v4SPD16_eabi.lib : _lock.obj (.text)
+                  00001a1c    00000014     driverlib.lib : udma.obj (.text:uDMAChannelRequest)
+                  00001a30    00000012                   : gpio.obj (.text:GPIOPinTypeI2C)
+                  00001a42    00000012                   : gpio.obj (.text:GPIOPinTypeI2CSCL)
+                  00001a54    00000012                   : gpio.obj (.text:GPIOPinTypeLCD)
+                  00001a66    00000012                   : gpio.obj (.text:GPIOPinTypeTimer)
+                  00001a78    00000012     rtsv7M4_T_le_v4SPD16_eabi.lib : copy_zero_init.obj (.text:decompress:ZI)
+                  00001a8a    00000002     --HOLE-- [fill = 0]
+                  00001a8c    00000010     driverlib.lib : udma.obj (.text:uDMAEnable)
+                  00001a9c    0000000e     rtsv7M4_T_le_v4SPD16_eabi.lib : copy_decompress_none.obj (.text:decompress:none)
+                  00001aaa    0000000c     driverlib.lib : lcd.obj (.text:LCDIDDCommandWrite)
+                  00001ab6    0000000c                   : lcd.obj (.text:LCDIDDDataWrite)
+                  00001ac2    0000000c     tm4c129xnczad_startup_ccs.obj (.text)
+                  00001ace    00000002     --HOLE-- [fill = 0]
+                  00001ad0    0000000c     driverlib.lib : udma.obj (.text:uDMAControlBaseSet)
+                  00001adc    00000006                   : gpio.obj (.text:GPIOPinRead)
+                  00001ae2    00000006                   : gpio.obj (.text:GPIOPinWrite)
+                  00001ae8    00000006                   : sysctl.obj (.text:SysCtlDelay)
+                  00001aee    00000006     rtsv7M4_T_le_v4SPD16_eabi.lib : copy_decompress_rle.obj (.text:decompress:rle24)
+                  00001af4    00000004     driverlib.lib : lcd.obj (.text:LCDDMAConfigSet)
+                  00001af8    00000004                   : lcd.obj (.text:LCDIDDConfigSet)
+
+.const     0    00001afc    000001c4     
+                  00001afc    00000120     driverlib.lib : sysctl.obj (.const:g_pppui32XTALtoVCO)
+                  00001c1c    0000006c                   : sysctl.obj (.const:g_pui32Xtals)
+                  00001c88    00000030                   : sysctl.obj (.const:g_sXTALtoMEMTIM)
+                  00001cb8    00000008                   : sysctl.obj (.const)
+
+.cinit     0    00001cc0    00000038     
+                  00001cc0    0000000f     (.cinit..data.load) [load image, compression = rle]
+                  00001ccf    00000001     --HOLE-- [fill = 0]
+                  00001cd0    0000000c     (__TI_handler_table)
+                  00001cdc    00000004     --HOLE-- [fill = 0]
+                  00001ce0    00000008     (.cinit..bss.load) [load image, compression = zero_init]
+                  00001ce8    00000010     (__TI_cinit_table)
+
+.bss       0    20000000    00001228     UNINITIALIZED
+                  20000000    000005a0     main.obj (.bss:buffer$1)
+                  200005a0    00000440     main.obj (.bss:back_buffer$2)
+                  200009e0    00000440     main.obj (.bss:test_buffer$3)
+                  20000e20    00000400     main.obj (.bss:pui8DMAControlTable$4)
+                  20001220    00000004     (.common:g_ui32MX66L51235FAddr)
+                  20001224    00000004     (.common:g_ui32SysClock)
+
+.stack     0    20001228    00000800     UNINITIALIZED
+                  20001228    00000800     --HOLE--
+
+.data      0    20001a28    00000014     UNINITIALIZED
+                  20001a28    00000008     rtsv7M4_T_le_v4SPD16_eabi.lib : _lock.obj (.data)
+                  20001a30    00000008                                   : exit.obj (.data)
+                  20001a38    00000004                                   : stkdepth_vars.obj (.data)
+
+
+LINKER GENERATED COPY TABLES
+
+__TI_cinit_table @ 00001ce8 records: 2, size/record: 8, table size: 16
+	.data: load addr=00001cc0, load size=0000000f bytes, run addr=20001a28, run size=00000014 bytes, compression=rle
+	.bss: load addr=00001ce0, load size=00000008 bytes, run addr=20000000, run size=00001228 bytes, compression=zero_init
+
+
+LINKER GENERATED HANDLER TABLE
+
+__TI_handler_table @ 00001cd0 records: 3, size/record: 4, table size: 12
+	index: 0, handler: __TI_decompress_rle24
+	index: 1, handler: __TI_decompress_none
+	index: 2, handler: __TI_zero_init
+
+
+GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
+
+address    name
+--------   ----
+00001881   C$$EXIT
+00001931   GPIODirModeSet
+000013d5   GPIOPadConfigSet
+00001add   GPIOPinRead
+000019c1   GPIOPinTypeGPIOOutput
+00001a31   GPIOPinTypeI2C
+00001a43   GPIOPinTypeI2CSCL
+00001a55   GPIOPinTypeLCD
+00001a67   GPIOPinTypeTimer
+00001ae3   GPIOPinWrite
+000006c1   K430WQC_V3_16bitInit
+00001af5   LCDDMAConfigSet
+00001aab   LCDIDDCommandWrite
+00001af9   LCDIDDConfigSet
+00001ab7   LCDIDDDataWrite
+000018c5   LCDIDDTimingSet
+00001981   LCDModeSet
+0000102f   MX66L51235FBlockErase32
+00001081   MX66L51235FBlockErase64
+000010d3   MX66L51235FChipErase
+00000eb1   MX66L51235FInit
+0000111b   MX66L51235FPageProgram
+00001177   MX66L51235FRead
+00000fdd   MX66L51235FSectorErase
+000008e9   PinoutSet
+00001ac3   ResetISR
+UNDEFED    SHT$$INIT_ARRAY$$Base
+UNDEFED    SHT$$INIT_ARRAY$$Limit
+000011d9   SysCtlClockFreqSet
+00001ae9   SysCtlDelay
+000018fd   SysCtlPeripheralEnable
+00001715   SysCtlPeripheralReset
+20001a28   __STACK_END
+00000800   __STACK_SIZE
+20001428   __STACK_TOP
+00001ce8   __TI_CINIT_Base
+00001cf8   __TI_CINIT_Limit
+00001cd0   __TI_Handler_Table_Base
+00001cdc   __TI_Handler_Table_Limit
+00000001   __TI_args_main
+000015a1   __TI_auto_init
+20001a30   __TI_cleanup_ptr
+00001a9d   __TI_decompress_none
+00001aef   __TI_decompress_rle24
+20001a34   __TI_dtors_ptr
+00000000   __TI_static_base__
+00001a79   __TI_zero_init
+00001505   __aeabi_memcpy
+00001505   __aeabi_memcpy4
+00001505   __aeabi_memcpy8
+ffffffff   __binit__
+ffffffff   __c_args__
+20001228   __stack
+000019d9   _args_main
+000017ad   _c_int00
+20001a28   _lock
+00001a17   _nop
+00001a0f   _register_lock
+00001a09   _register_unlock
+20001a2c   _unlock
+00001885   abort
+ffffffff   binit
+0000183d   copy_in
+0000188d   exit
+00000000   g_pfnVectors
+20001224   g_ui32SysClock
+00000231   main
+20001a38   main_func_sp
+00001505   memcpy
+000017f5   uDMAChannelAttributeDisable
+0000195d   uDMAChannelControlSet
+000019f1   uDMAChannelEnable
+00001a1d   uDMAChannelRequest
+00001635   uDMAChannelTransferSet
+00001ad1   uDMAControlBaseSet
+00001a8d   uDMAEnable
+
+
+GLOBAL SYMBOLS: SORTED BY Symbol Address 
+
+address    name
+--------   ----
+00000000   __TI_static_base__
+00000000   g_pfnVectors
+00000001   __TI_args_main
+00000231   main
+000006c1   K430WQC_V3_16bitInit
+00000800   __STACK_SIZE
+000008e9   PinoutSet
+00000eb1   MX66L51235FInit
+00000fdd   MX66L51235FSectorErase
+0000102f   MX66L51235FBlockErase32
+00001081   MX66L51235FBlockErase64
+000010d3   MX66L51235FChipErase
+0000111b   MX66L51235FPageProgram
+00001177   MX66L51235FRead
+000011d9   SysCtlClockFreqSet
+000013d5   GPIOPadConfigSet
+00001505   __aeabi_memcpy
+00001505   __aeabi_memcpy4
+00001505   __aeabi_memcpy8
+00001505   memcpy
+000015a1   __TI_auto_init
+00001635   uDMAChannelTransferSet
+00001715   SysCtlPeripheralReset
+000017ad   _c_int00
+000017f5   uDMAChannelAttributeDisable
+0000183d   copy_in
+00001881   C$$EXIT
+00001885   abort
+0000188d   exit
+000018c5   LCDIDDTimingSet
+000018fd   SysCtlPeripheralEnable
+00001931   GPIODirModeSet
+0000195d   uDMAChannelControlSet
+00001981   LCDModeSet
+000019c1   GPIOPinTypeGPIOOutput
+000019d9   _args_main
+000019f1   uDMAChannelEnable
+00001a09   _register_unlock
+00001a0f   _register_lock
+00001a17   _nop
+00001a1d   uDMAChannelRequest
+00001a31   GPIOPinTypeI2C
+00001a43   GPIOPinTypeI2CSCL
+00001a55   GPIOPinTypeLCD
+00001a67   GPIOPinTypeTimer
+00001a79   __TI_zero_init
+00001a8d   uDMAEnable
+00001a9d   __TI_decompress_none
+00001aab   LCDIDDCommandWrite
+00001ab7   LCDIDDDataWrite
+00001ac3   ResetISR
+00001ad1   uDMAControlBaseSet
+00001add   GPIOPinRead
+00001ae3   GPIOPinWrite
+00001ae9   SysCtlDelay
+00001aef   __TI_decompress_rle24
+00001af5   LCDDMAConfigSet
+00001af9   LCDIDDConfigSet
+00001cd0   __TI_Handler_Table_Base
+00001cdc   __TI_Handler_Table_Limit
+00001ce8   __TI_CINIT_Base
+00001cf8   __TI_CINIT_Limit
+20001224   g_ui32SysClock
+20001228   __stack
+20001428   __STACK_TOP
+20001a28   __STACK_END
+20001a28   _lock
+20001a2c   _unlock
+20001a30   __TI_cleanup_ptr
+20001a34   __TI_dtors_ptr
+20001a38   main_func_sp
+ffffffff   __binit__
+ffffffff   __c_args__
+ffffffff   binit
+UNDEFED    SHT$$INIT_ARRAY$$Base
+UNDEFED    SHT$$INIT_ARRAY$$Limit
+
+[76 symbols]
