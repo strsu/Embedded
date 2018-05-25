@@ -14,6 +14,7 @@ ORDERED_OBJS += \
 "./main.obj" \
 "./myLib.obj" \
 "./pinout.obj" \
+"./rhythm.obj" \
 "./tm4c129xnczad_startup_ccs.obj" \
 "./third_party/fatfs/src/option/cc932.obj" \
 "./third_party/fatfs/src/ff.obj" \
@@ -165,8 +166,8 @@ Term_Project.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "Module.pp" "main.pp" "myLib.pp" "pinout.pp" "tm4c129xnczad_startup_ccs.pp" "third_party\fatfs\src\option\cc932.pp" "third_party\fatfs\src\ff.pp" "third_party\fatfs\port\mmc-dk-tm4c129x.pp" "drivers\mx66l51235f.pp" 
-	-$(RM) "Module.obj" "main.obj" "myLib.obj" "pinout.obj" "tm4c129xnczad_startup_ccs.obj" "third_party\fatfs\src\option\cc932.obj" "third_party\fatfs\src\ff.obj" "third_party\fatfs\port\mmc-dk-tm4c129x.obj" "drivers\mx66l51235f.obj" 
+	-$(RM) "Module.pp" "main.pp" "myLib.pp" "pinout.pp" "rhythm.pp" "tm4c129xnczad_startup_ccs.pp" "third_party\fatfs\src\option\cc932.pp" "third_party\fatfs\src\ff.pp" "third_party\fatfs\port\mmc-dk-tm4c129x.pp" "drivers\mx66l51235f.pp" 
+	-$(RM) "Module.obj" "main.obj" "myLib.obj" "pinout.obj" "rhythm.obj" "tm4c129xnczad_startup_ccs.obj" "third_party\fatfs\src\option\cc932.obj" "third_party\fatfs\src\ff.obj" "third_party\fatfs\port\mmc-dk-tm4c129x.obj" "drivers\mx66l51235f.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

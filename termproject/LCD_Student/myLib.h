@@ -61,6 +61,7 @@ void LCD_Init(unsigned long g_ui32SysClock);
 void RestoreBackground(unsigned char *buffer, int x1, int y1, int x2, int y2, int image);
 void CharacterDraw(unsigned char *buffer, int x1, int y1, int x2, int y2, int image);
 void NoteDraw(unsigned char *buffer, int x1, int y1, int x2, int y2, int image);
+void BarDraw(unsigned char *buffer, int x1, int y1, int x2, int y2, int image);
 
 void PutPixel(int x, int y, int color);
 void DrawLine(int x1, int y1, int x2, int y2, int color);
