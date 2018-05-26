@@ -36,18 +36,13 @@ void imageMove(int *buffer, int *noteX, int *noteY) {
 void noteView(int *buffer, int *noteX_Location, int *noteY_Location) {
 	int i, j;
 	int BarX_Location[4] = { 4, 78, 152, 226 };
-	for (i = 0; i < 4; i++) {
+	for (i = 0; i < 8; i++) {
 		NoteDraw(buffer, noteX_Location[i], noteY_Location[i], imageX + noteX_Location[i], imageY + noteY_Location[i], NOTE);
-		RestoreBackground(buffer, noteX_Location[i], noteY_Location[i] + imageY, noteX_Location[i] + imageX, noteY_Location[i] + imageY + velocty, IMAGE2);
-		stay_with_me_velocity[i]--;
-		if (stay_with_me_velocity[i] < 1) {
-			noteY_Location[i] -= velocty;
-		}
+		RestoreBackground(buffer, noteX_Location[i], noteY_Location[i] + imageY, noteX_Location[i] + imageX, noteY_Location[i] + imageY + velocity, IMAGE2);
+		noteY_Location[i] -= velocity;
 		if (noteY_Location[i] < 8) {
 			BarView(buffer, BarX_Location);
 			noteY_Location[i] = 260;
-			stay_with_me_velocity[i] = stay_with_me_velocity[delay_cnt];
-			delay_cnt++;
 		}
 	}
 }

@@ -275,6 +275,7 @@
 #define GPIO_PORTS_DR12R 		(*(volatile unsigned *)(GPIO_PORTS + 0x53C))
 #define GPIO_PORTT_DR12R 		(*(volatile unsigned *)(GPIO_PORTT + 0x53C))
 
+// push interrupt
 #define GPIO_PORTP_IM           (*(volatile unsigned *)(GPIO_PORTP + 0x410))
 #define GPIO_PORTP_IS           (*(volatile unsigned *)(GPIO_PORTP + 0x404))
 #define GPIO_PORTP_IBE          (*(volatile unsigned *)(GPIO_PORTP + 0x408))
@@ -310,6 +311,45 @@
 #define GPIO_PORTK_RIS          (*(volatile unsigned *)(GPIO_PORTK + 0x414))
 #define GPIO_PORTK_ICR          (*(volatile unsigned *)(GPIO_PORTK + 0x41C))
 #define GPIO_PORTK_SI           (*(volatile unsigned *)(GPIO_PORTK + 0x538))
+// push interrupt start
+
+// dip interrupt start
+#define GPIO_PORTA_IM           (*(volatile unsigned *)(GPIO_PORTA + 0x410))
+#define GPIO_PORTA_IS           (*(volatile unsigned *)(GPIO_PORTA + 0x404))
+#define GPIO_PORTA_IBE          (*(volatile unsigned *)(GPIO_PORTA + 0x408))
+#define GPIO_PORTA_IEV          (*(volatile unsigned *)(GPIO_PORTA + 0x40C))
+#define GPIO_PORTA_IME          (*(volatile unsigned *)(GPIO_PORTA + 0x410))
+#define GPIO_PORTA_RIS          (*(volatile unsigned *)(GPIO_PORTA + 0x414))
+#define GPIO_PORTA_ICR          (*(volatile unsigned *)(GPIO_PORTA + 0x41C))
+#define GPIO_PORTA_SI           (*(volatile unsigned *)(GPIO_PORTA + 0x538))
+
+#define GPIO_PORTB_IM           (*(volatile unsigned *)(GPIO_PORTB + 0x410))
+#define GPIO_PORTB_IS           (*(volatile unsigned *)(GPIO_PORTB + 0x404))
+#define GPIO_PORTB_IBE          (*(volatile unsigned *)(GPIO_PORTB + 0x408))
+#define GPIO_PORTB_IEV          (*(volatile unsigned *)(GPIO_PORTB + 0x40C))
+#define GPIO_PORTB_IME          (*(volatile unsigned *)(GPIO_PORTB + 0x410))
+#define GPIO_PORTB_RIS          (*(volatile unsigned *)(GPIO_PORTB + 0x414))
+#define GPIO_PORTB_ICR          (*(volatile unsigned *)(GPIO_PORTB + 0x41C))
+#define GPIO_PORTB_SI           (*(volatile unsigned *)(GPIO_PORTB + 0x538))
+
+#define GPIO_PORTQ_IM           (*(volatile unsigned *)(GPIO_PORTQ + 0x410))
+#define GPIO_PORTQ_IS           (*(volatile unsigned *)(GPIO_PORTQ + 0x404))
+#define GPIO_PORTQ_IBE          (*(volatile unsigned *)(GPIO_PORTQ + 0x408))
+#define GPIO_PORTQ_IEV          (*(volatile unsigned *)(GPIO_PORTQ + 0x40C))
+#define GPIO_PORTQ_IME          (*(volatile unsigned *)(GPIO_PORTQ + 0x410))
+#define GPIO_PORTQ_RIS          (*(volatile unsigned *)(GPIO_PORTQ + 0x414))
+#define GPIO_PORTQ_ICR          (*(volatile unsigned *)(GPIO_PORTQ + 0x41C))
+#define GPIO_PORTQ_SI           (*(volatile unsigned *)(GPIO_PORTQ + 0x538))
+
+#define GPIO_PORTG_IM           (*(volatile unsigned *)(GPIO_PORTG + 0x410))
+#define GPIO_PORTG_IS           (*(volatile unsigned *)(GPIO_PORTG + 0x404))
+#define GPIO_PORTG_IBE          (*(volatile unsigned *)(GPIO_PORTG + 0x408))
+#define GPIO_PORTG_IEV          (*(volatile unsigned *)(GPIO_PORTG + 0x40C))
+#define GPIO_PORTG_IME          (*(volatile unsigned *)(GPIO_PORTG + 0x410))
+#define GPIO_PORTG_RIS          (*(volatile unsigned *)(GPIO_PORTG + 0x414))
+#define GPIO_PORTG_ICR          (*(volatile unsigned *)(GPIO_PORTG + 0x41C))
+#define GPIO_PORTG_SI           (*(volatile unsigned *)(GPIO_PORTG + 0x538))
+// dip interrupt end
 
 
 #define UART_BASE0              0x4000C000
@@ -391,37 +431,65 @@
 
 #define PCGPIO       		    (*(volatile unsigned *)(0x400FE908))
 #define PPHIB                   (*(volatile unsigned *)(0x400FE314))
-
+// 인터럽트 설정 영역 start
+// 0~3 : push, 4~9 : dip
 #define INTEN0                  (*(volatile unsigned *)(0xE000E100))
 #define INTEN1                  (*(volatile unsigned *)(0xE000E104))
 #define INTEN2                  (*(volatile unsigned *)(0xE000E108))
-#define INTEN3                  (*(volatile unsigned *)(0xE000E10C))
 
 #define INTDIS0                 (*(volatile unsigned *)(0xE000E180))
 #define INTDIS1                 (*(volatile unsigned *)(0xE000E184))
 #define INTDIS2                 (*(volatile unsigned *)(0xE000E188))
 #define INTDIS3                 (*(volatile unsigned *)(0xE000E18C))
 
+#define INTDIS4                  (*(volatile unsigned *)(0xE000E190))
+#define INTDIS5                  (*(volatile unsigned *)(0xE000E194))
+#define INTDIS6                  (*(volatile unsigned *)(0xE000E198))
+#define INTDIS7                  (*(volatile unsigned *)(0xE000E19C))
+#define INTDIS8                  (*(volatile unsigned *)(0xE000E1A0))
+#define INTDIS9                  (*(volatile unsigned *)(0xE000E1A4))
+
 #define INTPEND0                (*(volatile unsigned *)(0xE000E200))
 #define INTPEND1                (*(volatile unsigned *)(0xE000E204))
 #define INTPEND2                (*(volatile unsigned *)(0xE000E208))
 #define INTPEND3                (*(volatile unsigned *)(0xE000E20C))
+
+#define INTPEND4                (*(volatile unsigned *)(0xE000E210))
+#define INTPEND5                (*(volatile unsigned *)(0xE000E214))
+#define INTPEND6                (*(volatile unsigned *)(0xE000E218))
+#define INTPEND7                (*(volatile unsigned *)(0xE000E21C))
+#define INTPEND8                (*(volatile unsigned *)(0xE000E220))
+#define INTPEND9                (*(volatile unsigned *)(0xE000E224))
 
 #define INTUNPEND0              (*(volatile unsigned *)(0xE000E280))
 #define INTUNPEND1              (*(volatile unsigned *)(0xE000E284))
 #define INTUNPEND2              (*(volatile unsigned *)(0xE000E288))
 #define INTUNPEND3              (*(volatile unsigned *)(0xE000E28C))
 
-#define INTEN1                  (*(volatile unsigned *)(0xE000E104))
-#define INTDIS1                 (*(volatile unsigned *)(0xE000E184))
-#define INTPEND1                (*(volatile unsigned *)(0xE000E204))
-#define INTUNPEND1              (*(volatile unsigned *)(0xE000E284))
+#define INTUNPEND4              (*(volatile unsigned *)(0xE000E290))
+#define INTUNPEND5              (*(volatile unsigned *)(0xE000E294))
+#define INTUNPEND6              (*(volatile unsigned *)(0xE000E298))
+#define INTUNPEND7              (*(volatile unsigned *)(0xE000E29C))
+#define INTUNPEND8              (*(volatile unsigned *)(0xE000E2A0))
+#define INTUNPEND9              (*(volatile unsigned *)(0xE000E2A4))
 
-// 인터럽트 설정 영역
-#define INTPRI1					(*(volatile unsigned *)(0xE000E404))
-#define INTPRI13				(*(volatile unsigned *)(0xE000E434))
+#define INTPRI0					(*(volatile unsigned *)(0xE000E400))	//1~3		dip1~3 = 16
+#define INTPRI1					(*(volatile unsigned *)(0xE000E404))	//4~7
+#define INTPRI2					(*(volatile unsigned *)(0xE000E408))	//8~11
+#define INTPRI3					(*(volatile unsigned *)(0xE000E40C))	//12~15
+#define INTPRI4					(*(volatile unsigned *)(0xE000E410))	//16~19
+#define INTPRI5					(*(volatile unsigned *)(0xE000E414))	//20~23
+#define INTPRI6					(*(volatile unsigned *)(0xE000E418))	//24~27
+#define INTPRI7					(*(volatile unsigned *)(0xE000E41C))	//28~31
+#define INTPRI8					(*(volatile unsigned *)(0xE000E420))	//32~35
+#define INTPRI9					(*(volatile unsigned *)(0xE000E424))	//36~39
+#define INTPRI10				(*(volatile unsigned *)(0xE000E428))	//40~43
+#define INTPRI11				(*(volatile unsigned *)(0xE000E42C))	//44~47
+#define INTPRI12				(*(volatile unsigned *)(0xE000E430))	//48~51
+#define INTPRI13				(*(volatile unsigned *)(0xE000E434))	//52~55		push4 = 52
 #define INTPRI18				(*(volatile unsigned *)(0xE000E448))
 #define INTPRI19				(*(volatile unsigned *)(0xE000E44C))
+// 인터럽트 설정 영역 end
 
 #define PWM_BASE                0x40028000
 #define PWMGEN0_OFFSET          0x040

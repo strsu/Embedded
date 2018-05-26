@@ -56,10 +56,19 @@ extern uint32_t __STACK_TOP;
 //*****************************************************************************
 // To be added by user
 extern void TouchScreenIntHandler(void);
+// push
 extern void _user_interrupt_handler_1(void);
 extern void _user_interrupt_handler_2(void);
 extern void _user_interrupt_handler_3(void);
 extern void _user_interrupt_handler_4(void);
+// dip
+extern void _user_interrupt_handler_dip_a(void);
+extern void _user_interrupt_handler_dip_b(void);
+extern void _user_interrupt_handler_dip_g(void);
+extern void _user_interrupt_handler_dip_q6(void);
+extern void _user_interrupt_handler_dip_q5(void);
+extern void _user_interrupt_handler_dip_q4(void);
+
 
 //extern void _user_PWMTimer0Int(void);
 //extern void _user_Bluetooth_Interrupt_Handler(void);
@@ -91,8 +100,8 @@ void (* const g_pfnVectors[])(void) =
     0,                                      // Reserved
     IntDefaultHandler,                      // The PendSV handler
     IntDefaultHandler,                      // The SysTick handler
-    IntDefaultHandler,                      // GPIO Port A
-    IntDefaultHandler,                      // GPIO Port B
+	_user_interrupt_handler_dip_a,                      // GPIO Port A
+	_user_interrupt_handler_dip_b,                      // GPIO Port B
     IntDefaultHandler,                      // GPIO Port C
     IntDefaultHandler,                      // GPIO Port D
 	_user_interrupt_handler_3,              // GPIO Port E
@@ -108,8 +117,8 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // ADC Sequence 0
     IntDefaultHandler,                      // ADC Sequence 1
     IntDefaultHandler,                      // ADC Sequence 2
-	IntDefaultHandler,                        // ADC Sequence 3
-    IntDefaultHandler,                      // Watchdog timer
+	IntDefaultHandler,                      // ADC Sequence 3
+    IntDefaultHandler,                      // Watchdog timer	34
     IntDefaultHandler,                      // Timer 0 subtimer A
     IntDefaultHandler,                      // Timer 0 subtimer B
     IntDefaultHandler,                      // Timer 1 subtimer A
@@ -122,7 +131,7 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // System Control (PLL, OSC, BO)
     IntDefaultHandler,                      // FLASH Control
     IntDefaultHandler,                      // GPIO Port F
-    IntDefaultHandler,                      // GPIO Port G
+	_user_interrupt_handler_dip_g,                      // GPIO Port G
     IntDefaultHandler,                      // GPIO Port H
     IntDefaultHandler,                      // UART2 Rx and Tx
     IntDefaultHandler,                      // SSI1 Rx and Tx
@@ -164,11 +173,11 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // I2C4 Master and Slave
     IntDefaultHandler,                      // I2C5 Master and Slave
     IntDefaultHandler,                      // GPIO Port M
-	_user_interrupt_handler_2,              // GPIO Port N
+	_user_interrupt_handler_2,              // GPIO Port N					73
     0,                                      // Reserved
     IntDefaultHandler,                      // Tamper
     IntDefaultHandler,                      // GPIO Port P (Summary or P0)
-	_user_interrupt_handler_1,              // GPIO Port P1
+	_user_interrupt_handler_1,              // GPIO Port P1					77
     IntDefaultHandler,                      // GPIO Port P2
     IntDefaultHandler,                      // GPIO Port P3
     IntDefaultHandler,                      // GPIO Port P4
@@ -179,9 +188,9 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // GPIO Port Q1
     IntDefaultHandler,                      // GPIO Port Q2
     IntDefaultHandler,                      // GPIO Port Q3
-    IntDefaultHandler,                      // GPIO Port Q4
-    IntDefaultHandler,                      // GPIO Port Q5
-    IntDefaultHandler,                      // GPIO Port Q6
+	_user_interrupt_handler_dip_q4,                      // GPIO Port Q4	88
+	_user_interrupt_handler_dip_q5,                      // GPIO Port Q5	89
+	_user_interrupt_handler_dip_q6,                      // GPIO Port Q6	90
     IntDefaultHandler,                      // GPIO Port Q7
     IntDefaultHandler,                      // GPIO Port R
     IntDefaultHandler,                      // GPIO Port S

@@ -10,6 +10,8 @@ extern uint32_t g_ui32SysClock;
 
 void Interrupt_init(void) {
 	//GPIO Run Mode Clock Gating control(p.400)
+
+	/*
 	RCGCGPIO = RCGCGPIO | (0x01 << 13) | (0x01 << 12) | (0x01 << 4) | (0x01 << 9);
 
 	GPIO_PORTP_DIR = GPIO_PORTP_DIR & ~((0x01 << 1)); // PUSH1
@@ -25,61 +27,108 @@ void Interrupt_init(void) {
 	GPIO_PORTP_DEN = GPIO_PORTP_DEN | (0x01 << 1);
 	GPIO_PORTN_DEN = GPIO_PORTN_DEN | (0x01 << 3);
 	GPIO_PORTE_DEN = GPIO_PORTE_DEN | (0x01 << 5);
-	GPIO_PORTK_DEN = GPIO_PORTK_DEN | (0x01 << 7);
+	GPIO_PORTK_DEN = GPIO_PORTK_DEN | (0x01 << 7);	*/
 
 	//interrupt mask(p.800)
-	GPIO_PORTP_IM = GPIO_PORTP_IM & (~(0x01 << 1));
-	GPIO_PORTN_IM = GPIO_PORTN_IM & (~(0x01 << 3));
-	GPIO_PORTE_IM = GPIO_PORTE_IM & (~(0x01 << 5));
-	GPIO_PORTK_IM = GPIO_PORTK_IM & (~(0x01 << 7));
+		// push area
+		GPIO_PORTP_IM = GPIO_PORTP_IM & (~(0x01 << 1));
+		GPIO_PORTN_IM = GPIO_PORTN_IM & (~(0x01 << 3));
+		GPIO_PORTE_IM = GPIO_PORTE_IM & (~(0x01 << 5));
+		GPIO_PORTK_IM = GPIO_PORTK_IM & (~(0x01 << 7));
+		// dip area
+		GPIO_PORTA_IM = GPIO_PORTA_IM & (~ ( (0x01 << 3)|(0x01 << 6)|(0x01 << 7) ) );
+		GPIO_PORTB_IM = GPIO_PORTB_IM & (~ (0x01 << 3));
+		GPIO_PORTQ_IM = GPIO_PORTQ_IM & (~ ( (0x01 << 6)|(0x01 << 5)|(0x01 << 4) ) );
+		GPIO_PORTG_IM = GPIO_PORTG_IM & (~ (0x01 << 6));
 
 	//interrupt sense(p.796)
-	GPIO_PORTP_IS = GPIO_PORTP_IS | (0x01 << 1);
-	GPIO_PORTN_IS = GPIO_PORTN_IS | (0x01 << 3);
-	GPIO_PORTE_IS = GPIO_PORTE_IS | (0x01 << 5);
-	GPIO_PORTK_IS = GPIO_PORTK_IS | (0x01 << 7);
+		// push area
+		GPIO_PORTP_IS = GPIO_PORTP_IS | (0x01 << 1);
+		GPIO_PORTN_IS = GPIO_PORTN_IS | (0x01 << 3);
+		GPIO_PORTE_IS = GPIO_PORTE_IS | (0x01 << 5);
+		GPIO_PORTK_IS = GPIO_PORTK_IS | (0x01 << 7);
+		// dip area
+		GPIO_PORTA_IS = GPIO_PORTA_IS | (0x01 << 3)|(0x01 << 6)|(0x01 << 7) ;
+		GPIO_PORTB_IS = GPIO_PORTB_IS | (0x01 << 3);
+		GPIO_PORTQ_IS = GPIO_PORTQ_IS | (0x01 << 6)|(0x01 << 5)|(0x01 << 4);
+		GPIO_PORTG_IS = GPIO_PORTG_IS | (0x01 << 6);
 
 	//interrupt event(p.799)
-	GPIO_PORTP_IEV = GPIO_PORTP_IEV & (~(0x01 << 1));
-	GPIO_PORTN_IEV = GPIO_PORTN_IEV & (~(0x01 << 3));
-	GPIO_PORTE_IEV = GPIO_PORTE_IEV & (~(0x01 << 5));
-	GPIO_PORTK_IEV = GPIO_PORTK_IEV & (~(0x01 << 7));
+		//push area
+		GPIO_PORTP_IEV = GPIO_PORTP_IEV & (~(0x01 << 1));
+		GPIO_PORTN_IEV = GPIO_PORTN_IEV & (~(0x01 << 3));
+		GPIO_PORTE_IEV = GPIO_PORTE_IEV & (~(0x01 << 5));
+		GPIO_PORTK_IEV = GPIO_PORTK_IEV & (~(0x01 << 7));
+		// dip area
+
+		GPIO_PORTA_IEV = GPIO_PORTA_IEV | (0x01 << 3)|(0x01 << 6)|(0x01 << 7) ;
+		GPIO_PORTB_IEV = GPIO_PORTB_IEV | (0x01 << 3);
+		GPIO_PORTQ_IEV = GPIO_PORTQ_IEV | (0x01 << 6)|(0x01 << 5)|(0x01 << 4);
+		GPIO_PORTG_IEV = GPIO_PORTG_IEV | (0x01 << 6);
 
 	//interrupt clear(p.805)
-	GPIO_PORTP_ICR = GPIO_PORTP_ICR | (0x01 << 1);
-	GPIO_PORTN_ICR = GPIO_PORTN_ICR | (0x01 << 3);
-	GPIO_PORTE_ICR = GPIO_PORTE_ICR | (0x01 << 5);
-	GPIO_PORTK_ICR = GPIO_PORTK_ICR | (0x01 << 7);
+		// push area
+		GPIO_PORTP_ICR = GPIO_PORTP_ICR | (0x01 << 1);
+		GPIO_PORTN_ICR = GPIO_PORTN_ICR | (0x01 << 3);
+		GPIO_PORTE_ICR = GPIO_PORTE_ICR | (0x01 << 5);
+		GPIO_PORTK_ICR = GPIO_PORTK_ICR | (0x01 << 7);
+		// dip area
+		GPIO_PORTA_ICR = GPIO_PORTA_ICR | (0x01 << 3)|(0x01 << 6)|(0x01 << 7) ;
+		GPIO_PORTB_ICR = GPIO_PORTB_ICR | (0x01 << 3);
+		GPIO_PORTQ_ICR = GPIO_PORTQ_ICR | (0x01 << 6)|(0x01 << 5)|(0x01 << 4);
+		GPIO_PORTG_ICR = GPIO_PORTG_ICR | (0x01 << 6);
 
 	//select interrupt(p.827)
-	GPIO_PORTP_SI = 1;
-	GPIO_PORTN_SI = 0;
-	GPIO_PORTE_SI = 0;
-	GPIO_PORTK_SI = 0;
+		// push area
+		GPIO_PORTP_SI = 1;
+		GPIO_PORTN_SI = 0;
+		GPIO_PORTE_SI = 0;
+		GPIO_PORTK_SI = 0;
+		// dip area
+		GPIO_PORTA_SI = 1;	// 포트가 나뉘에 있으면 1, 아니면 0
+		GPIO_PORTB_SI = 0;
+		GPIO_PORTQ_SI = 1;
+		GPIO_PORTG_SI = 0;
 
 	//interrupt set enable(p.166, p.127)
 
-	INTEN0 = 0x01 << (4 - 0);
+	INTEN0 = 0x80040013;	// A, B, E, G port 사용, WTD 사용	0x01 << (4 - 0);
 	INTEN1 = 0x01 << (52 - 32);
-	INTEN2 = 0x11 << (73 - 64);
+	INTEN2 = 0x07002200;	// N, P1, Q4,5,6 port 사용
 
-	GPIO_PORTP_IM = GPIO_PORTP_IM | (0x01 << 1);
-	GPIO_PORTP_IME = GPIO_PORTP_IME | (0x01 << 1);
+		// push area
+		GPIO_PORTP_IM = GPIO_PORTP_IM | (0x01 << 1);
+		GPIO_PORTP_IME = GPIO_PORTP_IME | (0x01 << 1);
 
-	GPIO_PORTN_IM = GPIO_PORTN_IM | (0x01 << 3);
-	GPIO_PORTN_IME = GPIO_PORTN_IME | (0x01 << 3);
+		GPIO_PORTN_IM = GPIO_PORTN_IM | (0x01 << 3);
+		GPIO_PORTN_IME = GPIO_PORTN_IME | (0x01 << 3);
 
-	GPIO_PORTE_IM = GPIO_PORTE_IM | (0x01 << 5);
-	GPIO_PORTE_IME = GPIO_PORTE_IME | (0x01 << 5);
+		GPIO_PORTE_IM = GPIO_PORTE_IM | (0x01 << 5);
+		GPIO_PORTE_IME = GPIO_PORTE_IME | (0x01 << 5);
 
-	GPIO_PORTK_IM = GPIO_PORTK_IM | (0x01 << 7);
-	GPIO_PORTK_IME = GPIO_PORTK_IME | (0x01 << 7);
+		GPIO_PORTK_IM = GPIO_PORTK_IM | (0x01 << 7);
+		GPIO_PORTK_IME = GPIO_PORTK_IME | (0x01 << 7);
+
+		// dip area
+		GPIO_PORTA_IM = GPIO_PORTA_IM | (( (0x01 << 3)|(0x01 << 6)|(0x01 << 7) ) );
+		GPIO_PORTA_IME = GPIO_PORTA_IME | (( (0x01 << 3)|(0x01 << 6)|(0x01 << 7) ) );
+
+		GPIO_PORTB_IM = GPIO_PORTB_IM | ((0x01 << 3));
+		GPIO_PORTB_IME = GPIO_PORTB_IME | ((0x01 << 3));
+
+		GPIO_PORTQ_IM = GPIO_PORTQ_IM | (( (0x01 << 6)|(0x01 << 5)|(0x01 << 4) ) );
+		GPIO_PORTQ_IME = GPIO_PORTQ_IME | (( (0x01 << 6)|(0x01 << 5)|(0x01 << 4) ) );
+
+		GPIO_PORTG_IM = GPIO_PORTG_IM | ((0x01 << 6));
+		GPIO_PORTG_IME = GPIO_PORTG_IME | ((0x01 << 6));
+
 
 	// interrupt priority
-	INTPRI1  = INTPRI1  | (0x1 << 5);
-	INTPRI13 = INTPRI13 | (0x1 << 5);
-	INTPRI18 = INTPRI18 | (0x2 << 13);
-	INTPRI19 = INTPRI19 | (0x3 << 13);
+	INTPRI1  = INTPRI1  | (0x1 << 5);	//push3
+	INTPRI0  = INTPRI0  | (0x2 << 5);	//dip1~3
+	INTPRI13 = INTPRI13 | (0x1 << 5);	//push4
+	INTPRI18 = INTPRI18 | (0x2 << 13);	//push2
+	INTPRI19 = INTPRI19 | (0x3 << 13);	//push1
 
 }
 
@@ -1277,15 +1326,15 @@ void PUSH_init(){
 void DIP_init(){
 	RCGCGPIO = RCGCGPIO | 0x4043;
 
-	GPIO_PORTA_DIR = GPIO_PORTA_DIR & ~((0x01<<3)|(0x01<<6)|(0x01<<7)) ;
-	GPIO_PORTB_DIR = GPIO_PORTB_DIR & ~(0x01<<3) ;
-	GPIO_PORTQ_DIR = GPIO_PORTQ_DIR & ~((0x01<<4)|(0x01<<5)|(0x01<<6)) ;
-	GPIO_PORTG_DIR = GPIO_PORTG_DIR & ~(0x01<<6) ;
+	GPIO_PORTA_DIR = GPIO_PORTA_DIR & (~((0x01<<3)|(0x01<<6)|(0x01<<7))) ;
+	GPIO_PORTB_DIR = GPIO_PORTB_DIR & (~(0x01<<3)) ;
+	GPIO_PORTQ_DIR = GPIO_PORTQ_DIR & (~((0x01<<4)|(0x01<<5)|(0x01<<6))) ;
+	GPIO_PORTG_DIR = GPIO_PORTG_DIR & (~(0x01<<6)) ;
 
-	GPIO_PORTA_AFSEL = GPIO_PORTA_AFSEL & ~((0x01<<3)|(0x01<<6)|(0x01<<7)) ;
-    GPIO_PORTB_AFSEL = GPIO_PORTB_AFSEL & ~(0x01<<3);
-	GPIO_PORTQ_AFSEL = GPIO_PORTQ_AFSEL & ~((0x01<<6)|(0x01<<5)|(0x01<<4)) ;
-	GPIO_PORTG_AFSEL = GPIO_PORTG_AFSEL & ~(0x01<<6);
+	GPIO_PORTA_AFSEL = GPIO_PORTA_AFSEL & (~((0x01<<3)|(0x01<<6)|(0x01<<7))) ;
+    GPIO_PORTB_AFSEL = GPIO_PORTB_AFSEL & (~(0x01<<3));
+	GPIO_PORTQ_AFSEL = GPIO_PORTQ_AFSEL & (~((0x01<<6)|(0x01<<5)|(0x01<<4))) ;
+	GPIO_PORTG_AFSEL = GPIO_PORTG_AFSEL & (~(0x01<<6));
 
 	GPIO_PORTA_DEN = GPIO_PORTA_DEN | (0x01<<3)|(0x01<<6)|(0x01<<7) ;
 	GPIO_PORTB_DEN = GPIO_PORTB_DEN | (0x01<<3);

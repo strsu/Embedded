@@ -70,7 +70,7 @@ static int stay_with_me_velocity[107] = {
 static int stay_with_me_cnt = 0;
 static int delay_cnt = 8;
 
-static int velocty = 1;
+static int velocity = 6;
 
 void imageMove(int *buffer, int *noteX, int *noteY);
 void noteView(int *buffer, int *noteX_Location, int *noteY_Location);

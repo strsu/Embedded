@@ -18,6 +18,13 @@ void _user_interrupt_handler_2(void);
 void _user_interrupt_handler_3(void);
 void _user_interrupt_handler_4(void);
 
+void _user_interrupt_handler_dip_a(void);
+void _user_interrupt_handler_dip_b(void);
+void _user_interrupt_handler_dip_g(void);
+void _user_interrupt_handler_dip_q6(void);
+void _user_interrupt_handler_dip_q5(void);
+void _user_interrupt_handler_dip_q4(void);
+
 int cnt = 0;
 unsigned char buffer[LCD_WIDTH * LCD_HEIGHT];
 
@@ -74,11 +81,12 @@ int main(void) {
 	LED_clear();
 
 	//DIP SWITCH 관련 함수
-	//DIP_init();
-
+	DIP_init();
 
 	// PUSH 관련 함수
 	PUSH_init();
+
+	Interrupt_init();
 
 	// 7-SEGMENT 관련 함수
 	FND_init();
@@ -92,6 +100,8 @@ int main(void) {
 	LCD_Init(g_ui32SysClock);
 	//DrawImage(buffer, 0, 0, 480, 272, IMAGE0);
 
+	// Interupt init
+	//Interrupt_init();
 
 	GPIO_WRITE(GPIO_PORTD, 0x10, 0x10);  // buzzer ON
 	GPTMCTL = GPTMCTL | 0x41;   		 // timer enable
@@ -100,15 +110,15 @@ int main(void) {
 	delay(1000000);
 
 	DrawImage(buffer, 0, 0, 480, 272, IMAGE2);
-	//RestoreBackground(buffer, 0, 0, 50, 16, IMAGE5);
+
 	noteX = 15;
 	noteY = 260;
 	//NoteDraw(buffer,0,1,imageX,imageY+1,NOTE);
 	BarView(buffer, BarX_Location);
 	while (1) {
 		noteView(buffer, noteX_Location, noteY_Location);
-		StayWithMe(&doing);
-		doing--;
+		//StayWithMe(&doing);
+		//doing--;
 	}
 	cnt = 0;
 
@@ -191,8 +201,18 @@ void _user_interrupt_handler_4(void) {
 	GPIO_PORTK_IM = GPIO_PORTK_IM & (~(0x01 << 7));
 
 	// ******* Your Code ******* //
+	int push_data =  (~GPIO_READ(GPIO_PORTP, (0x01 << 1)) >> 1) & (~GPIO_READ(GPIO_PORTN, (0x01 << 3)) >> 2) & \
+						 (~GPIO_READ(GPIO_PORTE, (0x01 << 5)) >> 3) & (~GPIO_READ(GPIO_PORTK, (0x01 << 7)) >> 4);
 
-	GPIO_WRITE(GPIO_PORTL, 0x0f, 2);
+	int dip_data =  ( GPIO_READ(GPIO_PORTA, 0x08) << 4 ) | ( GPIO_READ(GPIO_PORTA, 0x40) << 0 ) |
+						( GPIO_READ(GPIO_PORTA, 0x80) >> 2 ) | ( GPIO_READ(GPIO_PORTB, 0x08) << 1 ) |
+						( GPIO_READ(GPIO_PORTQ, 0x40) >> 3 ) | ( GPIO_READ(GPIO_PORTQ, 0x20) >> 3 ) |
+						( GPIO_READ(GPIO_PORTQ, 0x10) >> 3 ) | ( GPIO_READ(GPIO_PORTG, 0x40) >> 6 );
+
+	GPIO_WRITE(GPIO_PORTL, 0x0f, push_data);
+	delay(50000000);
+	GPIO_WRITE(GPIO_PORTL, 0x0f, 0);
+	GPIO_WRITE(GPIO_PORTL, 0x0f, dip_data);
 	delay(50000000);
 	GPIO_WRITE(GPIO_PORTL, 0x0f, 0);
 
@@ -203,4 +223,65 @@ void _user_interrupt_handler_4(void) {
 	INTUNPEND2 = INTPEND2;
 }
 
+void _user_interrupt_handler_dip_a(void) {	// 1 ~ 3 번
+	GPIO_PORTA_IM = GPIO_PORTA_IM & (~( (0x01 << 3)|(0x01 << 6)|(0x01 << 7) ) );
+
+	// ******* Your Code ******* //
+	int dip_data =  ( GPIO_READ(GPIO_PORTA, 0x08) << 4 ) | ( GPIO_READ(GPIO_PORTA, 0x40) << 0 ) |
+					( GPIO_READ(GPIO_PORTA, 0x80) >> 2 ) | ( GPIO_READ(GPIO_PORTB, 0x08) << 1 ) |
+					( GPIO_READ(GPIO_PORTQ, 0x40) >> 3 ) | ( GPIO_READ(GPIO_PORTQ, 0x20) >> 3 ) |
+					( GPIO_READ(GPIO_PORTQ, 0x10) >> 3 ) | ( GPIO_READ(GPIO_PORTG, 0x40) >> 6 );
+	if(dip_data & 0x1) {
+		GPIO_WRITE(GPIO_PORTL, 0x0f, 1);
+		delay(50000000);
+		GPIO_WRITE(GPIO_PORTL, 0x0f, 0);
+	} else if(dip_data & 0x2) {
+		GPIO_WRITE(GPIO_PORTL, 0x0f, 2);
+		delay(50000000);
+		GPIO_WRITE(GPIO_PORTL, 0x0f, 0);
+	} else if(dip_data & 0x4) {
+		GPIO_WRITE(GPIO_PORTL, 0x0f, 4);
+		delay(50000000);
+		GPIO_WRITE(GPIO_PORTL, 0x0f, 0);
+	}
+	GPIO_WRITE(GPIO_PORTL, 0x0f, (GPIO_READ(GPIO_PORTA, 0x08) << 4));
+	delay(50000000);
+	GPIO_WRITE(GPIO_PORTL, 0x0f, 0);
+	// *********  FIN ********** //
+
+	GPIO_PORTA_IM = GPIO_PORTA_IM | (( (0x01 << 3)|(0x01 << 6)|(0x01 << 7) ) );
+	//interrupt set pending/clear pending(p.168~169)
+	INTUNPEND2 = INTPEND2;
+}
+void _user_interrupt_handler_dip_b(void) {
+	GPIO_PORTA_IM = GPIO_PORTA_IM & (~(0x01 << 3));
+
+		// ******* Your Code ******* //
+		int dip_data =  ( GPIO_READ(GPIO_PORTA, 0x08) << 4 ) | ( GPIO_READ(GPIO_PORTA, 0x40) << 0 ) |
+						( GPIO_READ(GPIO_PORTA, 0x80) >> 2 ) | ( GPIO_READ(GPIO_PORTB, 0x08) << 1 ) |
+						( GPIO_READ(GPIO_PORTQ, 0x40) >> 3 ) | ( GPIO_READ(GPIO_PORTQ, 0x20) >> 3 ) |
+						( GPIO_READ(GPIO_PORTQ, 0x10) >> 3 ) | ( GPIO_READ(GPIO_PORTG, 0x40) >> 6 );
+
+		GPIO_WRITE(GPIO_PORTL, 0x0f, dip_data);
+		delay(50000000);
+		GPIO_WRITE(GPIO_PORTL, 0x0f, 0);
+
+		// *********  FIN ********** //
+
+		GPIO_PORTA_IM = GPIO_PORTA_IM | ((0x01 << 3));
+		//interrupt set pending/clear pending(p.168~169)
+		INTUNPEND2 = INTPEND2;
+}
+void _user_interrupt_handler_dip_g(void) {
+
+}
+void _user_interrupt_handler_dip_q6(void) {
+
+}
+void _user_interrupt_handler_dip_q5(void) {
+
+}
+void _user_interrupt_handler_dip_q4(void) {
+
+}
 
