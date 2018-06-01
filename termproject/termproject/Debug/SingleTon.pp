@@ -38,10 +38,13 @@ SingleTon.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/timer.h
 SingleTon.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/pin_map.h
 SingleTon.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/grlib.h
 SingleTon.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h
-SingleTon.obj: ../myLib.h
-SingleTon.obj: ../play.h
-SingleTon.obj: ../SingleTon.h
 SingleTon.obj: ../Module.h
+SingleTon.obj: ../MyLib.h
+SingleTon.obj: ../play.h
+SingleTon.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/math.h
+SingleTon.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/ymath.h
+SingleTon.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/float.h
+SingleTon.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/time.h
 SingleTon.obj: ../button.h
 SingleTon.obj: ../Bar.h
 SingleTon.obj: ../Input.h
@@ -85,10 +88,13 @@ C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/timer.h:
 C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/pin_map.h: 
 C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/grlib.h: 
 C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h: 
-../myLib.h: 
-../play.h: 
-../SingleTon.h: 
 ../Module.h: 
+../MyLib.h: 
+../play.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/math.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/ymath.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/float.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/time.h: 
 ../button.h: 
 ../Bar.h: 
 ../Input.h: 

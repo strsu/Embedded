@@ -8,8 +8,7 @@
 #include "SingleTon.h"
 
 void Init() {
-
+	NoteInit();
+	BarInit();
 }
-
-
 

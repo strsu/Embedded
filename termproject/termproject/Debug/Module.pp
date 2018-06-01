@@ -42,8 +42,11 @@ Module.obj: ../MyLib.h
 Module.obj: ../play.h
 Module.obj: ../SingleTon.h
 Module.obj: ../Module.h
+Module.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/math.h
+Module.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/ymath.h
+Module.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/float.h
+Module.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/time.h
 Module.obj: ../button.h
-Module.obj: ../SingleTon.h
 Module.obj: ../Bar.h
 Module.obj: ../Input.h
 Module.obj: ../Note.h
@@ -91,8 +94,11 @@ C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h:
 ../play.h: 
 ../SingleTon.h: 
 ../Module.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/math.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/ymath.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/float.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/time.h: 
 ../button.h: 
-../SingleTon.h: 
 ../Bar.h: 
 ../Input.h: 
 ../Note.h: 

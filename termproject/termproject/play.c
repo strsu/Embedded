@@ -1,50 +1,9 @@
 #include "play.h"
 
-void imageMove(int *buffer, int *noteX, int *noteY) {
-	int push_data = (~GPIO_READ(GPIO_PORTP, (0x01 << 1)) >> 1) & (~GPIO_READ(GPIO_PORTN, (0x01 << 3)) >> 2) &
-		(~GPIO_READ(GPIO_PORTE, (0x01 << 5)) >> 3) & (~GPIO_READ(GPIO_PORTK, (0x01 << 7)) >> 4);
-	if (push_data & 0x1) {
-		if (*noteX > 0) {
-			(*noteX)--;
-			NoteDraw(buffer, *noteX, *noteY, imageX + *noteX, imageY + *noteY, NOTEIMAGE);
-			RestoreBackground(buffer, *noteX + imageX, *noteY, *noteX + imageX + 2, *noteY + imageY, IMAGE2);
-		}
-	}
-	else if (push_data & 0x2) {
-		if (*noteX < 480 - imageX) {
-			(*noteX)++;
-			NoteDraw(buffer, *noteX, *noteY, imageX + *noteX, imageY + *noteY, NOTEIMAGE);
-			RestoreBackground(buffer, *noteX - 2, *noteY, *noteX, *noteY + imageY, IMAGE2);
-		}
-	}
-	else if (push_data & 0x4) {
-		if (*noteY < 272 - imageY) {
-			(*noteY)++;
-			NoteDraw(buffer, *noteX, *noteY, imageX + *noteX, imageY + *noteY, NOTEIMAGE);
-			RestoreBackground(buffer, *noteX, *noteY - 1, *noteX + imageX, *noteY, IMAGE2);
-		}
-	}
-	else if (push_data & 0x8) {
-		if (*noteY > 1) {
-			(*noteY)--;
-			NoteDraw(buffer, *noteX, *noteY, imageX + *noteX, imageY + *noteY, NOTEIMAGE);
-			RestoreBackground(buffer, *noteX, *noteY + imageY, *noteX + imageX, *noteY + imageY + 1, IMAGE2);
-		}
-	}
-}
 
-void noteView(int *buffer, int *noteX_Location, int *noteY_Location) {
-	int i, j;
-	int BarX_Location[4] = { 4, 78, 152, 226 };
-	for (i = 0; i < 8; i++) {
-		NoteDraw(buffer, noteX_Location[i], noteY_Location[i], imageX + noteX_Location[i], imageY + noteY_Location[i], NOTEIMAGE);
-		RestoreBackground(buffer, noteX_Location[i], noteY_Location[i] + imageY, noteX_Location[i] + imageX, noteY_Location[i] + imageY + velocity, IMAGE2);
-		noteY_Location[i] -= velocity;
-		if (noteY_Location[i] < 8) {
-			BarView(buffer, BarX_Location);
-			noteY_Location[i] = 260;
-		}
-	}
+
+void noteView() {
+	NoteUpdate();
 }
 
 void BarView(int *buffer, int *BarX_Location) {

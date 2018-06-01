@@ -7,6 +7,19 @@
 
 #include "Bar.h"
 
+void BarInit() {
+	int i;
+	st.BM.bar[0].x = 4;
+	st.BM.bar[1].x = 78;
+	st.BM.bar[2].x = 152;
+	st.BM.bar[3].x = 226;
+
+	for (i = 0; i < BAR_LMAX; i++) {
+		st.BM.bar[i].y = 0;
+		st.BM.bar[i].active = false;
+	}
+}
+
 void BarUpdate() {
 
 	if (!st.BM.bar[0].active) return;

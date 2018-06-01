@@ -1,9 +1,12 @@
 #ifndef _SINGLETON_H_
 #define _SINGLETON_H_
+#pragma once
 
 #include "cortex_m4.h"
-#include "myLib.h"
 #include "Module.h"
+#include "myLib.h"
+#include "math.h"
+#include "time.h"
 
 #include "button.h"
 #include "Bar.h"
@@ -11,6 +14,10 @@
 #include "Note.h"
 #include "play.h"
 
+#define LCD_HEIGHT	272
+#define LCD_WIDTH	480
+
+extern unsigned char buffer[LCD_WIDTH * LCD_HEIGHT];
 
 typedef struct {
 
@@ -20,7 +27,7 @@ typedef struct {
 	BarManager  	BM;
 }SingleTon;
 
-SingleTon st;
+static SingleTon st;
 
 void Init();
 

@@ -1,9 +1,3 @@
-#include "cortex_m4.h"
-#include "Module.h"
-#include "myLib.h"
-#include "math.h"
-#include "time.h"
-
 #include "SingleTon.h"
 
 #define COLOR_BLUE		0x001f
@@ -14,20 +8,14 @@
 
 uint32_t g_ui32SysClock;
 
+unsigned char buffer[LCD_WIDTH * LCD_HEIGHT];
+
 void _user_interrupt_handler_1(void);
 void _user_interrupt_handler_2(void);
 void _user_interrupt_handler_3(void);
 void _user_interrupt_handler_4(void);
 
-void _user_interrupt_handler_dip_a(void);
-void _user_interrupt_handler_dip_b(void);
-void _user_interrupt_handler_dip_g(void);
-void _user_interrupt_handler_dip_q6(void);
-void _user_interrupt_handler_dip_q5(void);
-void _user_interrupt_handler_dip_q4(void);
-
-int cnt = 0;
-unsigned char buffer[LCD_WIDTH * LCD_HEIGHT];
+int cnt;
 
 int main(void) {
 	g_ui32SysClock = SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ | SYSCTL_OSC_MAIN | SYSCTL_USE_PLL | SYSCTL_CFG_VCO_480), 120000000);
@@ -49,13 +37,12 @@ int main(void) {
 	int schoolBell_Code[24] = { G1,G1,A1,A1,G1,G1,E1,G1,G1,E1,E1,D1,G1,G1,A1,A1,G1,G1,E1,G1,G1,D1,E1,C1 };
 	// note relative variable
 	int noteX, noteY;
-	int noteX_Location[8] = { 14, 88, 162, 236, 14, 88, 162, 236 };
-	int noteY_Location[8] = { 260, 260, 260, 260, 260, 260, 260, 260 };
-	int BarX_Location[4] = { 4, 78, 152, 226 };
 
 	int push_data;
 	int dip_data;
 	int reverse_dip;
+
+	char *str;
 
 	// UART 관련 함수
 	uint8_t code;
@@ -79,7 +66,6 @@ int main(void) {
 
 	// Interupt init
 	Interrupt_init();
-	//Interrupt_init_dip();
 
 	// LED 관련 함수
 	LED_init();
@@ -91,8 +77,6 @@ int main(void) {
 	// PUSH 관련 함수
 	PUSH_init();
 
-	Interrupt_init();
-
 	// 7-SEGMENT 관련 함수
 	FND_init();
 	FND_clear();
@@ -103,9 +87,6 @@ int main(void) {
 	WDTinitISR();
 
 	LCD_Init(g_ui32SysClock);
-	//DrawImage(buffer, 0, 0, 480, 272, IMAGE0);
-
-
 
 	GPIO_WRITE(GPIO_PORTD, 0x10, 0x10);  // buzzer ON
 	GPTMCTL = GPTMCTL | 0x41;   		 // timer enable
@@ -113,17 +94,17 @@ int main(void) {
 	BUZZER_clear();
 	delay(1000000);
 
-	DrawImage(buffer, 0, 0, 480, 272, IMAGE2);
+	/* initial setting finish*/
 
-	noteX = 15;
-	noteY = 260;
-	//NoteDraw(buffer,0,1,imageX,imageY+1,NOTE);
-	BarView(buffer, BarX_Location);
-	//DrawCircle(100, 100, 50, 0xffff);
-	//while(1);
+	// SingleTon init
+	Init();
+
+	DrawImage(buffer, 0, 0, 480, 272, BACKGROUND);
 
 	while (1) {
-		noteView(buffer, noteX_Location, noteY_Location);
+		noteView();
+		UART_putch(g_ui32SysClock % 30);
+		//delay(1000000);
 		//StayWithMe(&doing);
 		//doing--;
 	}
@@ -134,12 +115,12 @@ int main(void) {
 		//push_data = (~GPIO_READ(GPIO_PORTP, (0x01 << 1)) >> 1) & (~GPIO_READ(GPIO_PORTN, (0x01 << 3)) >> 2) & \
 							  (~GPIO_READ(GPIO_PORTE, (0x01 << 5)) >> 3) & (~GPIO_READ(GPIO_PORTK, (0x01 << 7)) >> 4);
 
-		 		//reverse_dip =  ( GPIO_READ(GPIO_PORTA, 0x08) << 4 ) | ( GPIO_READ(GPIO_PORTA, 0x40) << 0 ) |	\
+				//reverse_dip =  ( GPIO_READ(GPIO_PORTA, 0x08) << 4 ) | ( GPIO_READ(GPIO_PORTA, 0x40) << 0 ) |	\
 		 						 ( GPIO_READ(GPIO_PORTA, 0x80) >> 2 ) | ( GPIO_READ(GPIO_PORTB, 0x08) << 1 ) |	\
 		 					  	 ( GPIO_READ(GPIO_PORTQ, 0x40) >> 3 ) | ( GPIO_READ(GPIO_PORTQ, 0x20) >> 3 ) |	\
 		 					  	 ( GPIO_READ(GPIO_PORTQ, 0x10) >> 3 ) | ( GPIO_READ(GPIO_PORTG, 0x40) >> 6 );
 
-		 		//dip_data =  (GPIO_READ(GPIO_PORTA, 0x08) >> 3) | (GPIO_READ(GPIO_PORTA, 0x40) >> 5) |	\
+				//dip_data =  (GPIO_READ(GPIO_PORTA, 0x08) >> 3) | (GPIO_READ(GPIO_PORTA, 0x40) >> 5) |	\
 		 					  (GPIO_READ(GPIO_PORTA, 0x80) >> 5) | (GPIO_READ(GPIO_PORTB, 0x08) >> 0) |	\
 		 					  (GPIO_READ(GPIO_PORTQ, 0x40) >> 2) | (GPIO_READ(GPIO_PORTQ, 0x20) >> 0) |	\
 		 					  (GPIO_READ(GPIO_PORTQ, 0x10) << 2) | (GPIO_READ(GPIO_PORTG, 0x40) << 1);
@@ -218,13 +199,13 @@ void _user_interrupt_handler_4(void) {
 	GPIO_PORTK_IM = GPIO_PORTK_IM & (~(0x01 << 7));
 
 	// ******* Your Code ******* //
-	int push_data =  (~GPIO_READ(GPIO_PORTP, (0x01 << 1)) >> 1) & (~GPIO_READ(GPIO_PORTN, (0x01 << 3)) >> 2) & \
-						 (~GPIO_READ(GPIO_PORTE, (0x01 << 5)) >> 3) & (~GPIO_READ(GPIO_PORTK, (0x01 << 7)) >> 4);
+	int push_data = (~GPIO_READ(GPIO_PORTP, (0x01 << 1)) >> 1) & (~GPIO_READ(GPIO_PORTN, (0x01 << 3)) >> 2) & \
+		(~GPIO_READ(GPIO_PORTE, (0x01 << 5)) >> 3) & (~GPIO_READ(GPIO_PORTK, (0x01 << 7)) >> 4);
 
-	int dip_data =  ( GPIO_READ(GPIO_PORTA, 0x08) << 4 ) | ( GPIO_READ(GPIO_PORTA, 0x40) << 0 ) |
-						( GPIO_READ(GPIO_PORTA, 0x80) >> 2 ) | ( GPIO_READ(GPIO_PORTB, 0x08) << 1 ) |
-						( GPIO_READ(GPIO_PORTQ, 0x40) >> 3 ) | ( GPIO_READ(GPIO_PORTQ, 0x20) >> 3 ) |
-						( GPIO_READ(GPIO_PORTQ, 0x10) >> 3 ) | ( GPIO_READ(GPIO_PORTG, 0x40) >> 6 );
+	int dip_data = (GPIO_READ(GPIO_PORTA, 0x08) << 4) | (GPIO_READ(GPIO_PORTA, 0x40) << 0) |
+		(GPIO_READ(GPIO_PORTA, 0x80) >> 2) | (GPIO_READ(GPIO_PORTB, 0x08) << 1) |
+		(GPIO_READ(GPIO_PORTQ, 0x40) >> 3) | (GPIO_READ(GPIO_PORTQ, 0x20) >> 3) |
+		(GPIO_READ(GPIO_PORTQ, 0x10) >> 3) | (GPIO_READ(GPIO_PORTG, 0x40) >> 6);
 
 	GPIO_WRITE(GPIO_PORTL, 0x0f, push_data);
 	delay(50000000);
@@ -238,67 +219,5 @@ void _user_interrupt_handler_4(void) {
 	GPIO_PORTK_IM = GPIO_PORTK_IM | (0x01 << 7);
 	//interrupt set pending/clear pending(p.168~169)
 	INTUNPEND2 = INTPEND2;
-}
-
-void _user_interrupt_handler_dip_a(void) {	// 1 ~ 3 번
-	GPIO_PORTA_IM = GPIO_PORTA_IM & (~( (0x01 << 3)|(0x01 << 6)|(0x01 << 7) ) );
-
-	// ******* Your Code ******* //
-	int dip_data =  ( GPIO_READ(GPIO_PORTA, 0x08) << 4 ) | ( GPIO_READ(GPIO_PORTA, 0x40) << 0 ) |
-					( GPIO_READ(GPIO_PORTA, 0x80) >> 2 ) | ( GPIO_READ(GPIO_PORTB, 0x08) << 1 ) |
-					( GPIO_READ(GPIO_PORTQ, 0x40) >> 3 ) | ( GPIO_READ(GPIO_PORTQ, 0x20) >> 3 ) |
-					( GPIO_READ(GPIO_PORTQ, 0x10) >> 3 ) | ( GPIO_READ(GPIO_PORTG, 0x40) >> 6 );
-	if(dip_data & 0x1) {
-		GPIO_WRITE(GPIO_PORTL, 0x0f, 1);
-		delay(50000000);
-		GPIO_WRITE(GPIO_PORTL, 0x0f, 0);
-	} else if(dip_data & 0x2) {
-		GPIO_WRITE(GPIO_PORTL, 0x0f, 2);
-		delay(50000000);
-		GPIO_WRITE(GPIO_PORTL, 0x0f, 0);
-	} else if(dip_data & 0x4) {
-		GPIO_WRITE(GPIO_PORTL, 0x0f, 4);
-		delay(50000000);
-		GPIO_WRITE(GPIO_PORTL, 0x0f, 0);
-	}
-	GPIO_WRITE(GPIO_PORTL, 0x0f, (GPIO_READ(GPIO_PORTA, 0x08) << 4));
-	delay(50000000);
-	GPIO_WRITE(GPIO_PORTL, 0x0f, 0);
-	// *********  FIN ********** //
-
-	GPIO_PORTA_IM = GPIO_PORTA_IM | (( (0x01 << 3)|(0x01 << 6)|(0x01 << 7) ) );
-	//interrupt set pending/clear pending(p.168~169)
-	INTUNPEND2 = INTPEND2;
-}
-void _user_interrupt_handler_dip_b(void) {
-	GPIO_PORTA_IM = GPIO_PORTA_IM & (~(0x01 << 3));
-
-		// ******* Your Code ******* //
-		int dip_data =  ( GPIO_READ(GPIO_PORTA, 0x08) << 4 ) | ( GPIO_READ(GPIO_PORTA, 0x40) << 0 ) |
-						( GPIO_READ(GPIO_PORTA, 0x80) >> 2 ) | ( GPIO_READ(GPIO_PORTB, 0x08) << 1 ) |
-						( GPIO_READ(GPIO_PORTQ, 0x40) >> 3 ) | ( GPIO_READ(GPIO_PORTQ, 0x20) >> 3 ) |
-						( GPIO_READ(GPIO_PORTQ, 0x10) >> 3 ) | ( GPIO_READ(GPIO_PORTG, 0x40) >> 6 );
-
-		GPIO_WRITE(GPIO_PORTL, 0x0f, dip_data);
-		delay(50000000);
-		GPIO_WRITE(GPIO_PORTL, 0x0f, 0);
-
-		// *********  FIN ********** //
-
-		GPIO_PORTA_IM = GPIO_PORTA_IM | ((0x01 << 3));
-		//interrupt set pending/clear pending(p.168~169)
-		INTUNPEND2 = INTPEND2;
-}
-void _user_interrupt_handler_dip_g(void) {
-
-}
-void _user_interrupt_handler_dip_q6(void) {
-
-}
-void _user_interrupt_handler_dip_q5(void) {
-
-}
-void _user_interrupt_handler_dip_q4(void) {
-
 }
 

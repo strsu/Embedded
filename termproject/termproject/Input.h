@@ -1,7 +1,7 @@
 #ifndef _INPUT_H_
 #define _INPUT_H_
-
-#include "SingleTon.h"
+#pragma once
+#include "cortex_m4.h"
 
 enum ITYPE {
 
@@ -18,6 +18,8 @@ typedef struct {
 	bool keyboard, push;
 } InputManager;
 
+#include "SingleTon.h"
+
 void InputUpdate();
 
-#endif _INPUT_H_
+#endif /* _INPUT_H_ */

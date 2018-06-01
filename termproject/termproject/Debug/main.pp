@@ -1,6 +1,7 @@
 # FIXED
 
 main.obj: ../main.c
+main.obj: ../SingleTon.h
 main.obj: ../cortex_m4.h
 main.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stdio.h
 main.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/linkage.h
@@ -40,20 +41,17 @@ main.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h
 main.obj: ../Module.h
 main.obj: ../MyLib.h
 main.obj: ../play.h
-main.obj: ../SingleTon.h
-main.obj: ../Module.h
-main.obj: ../button.h
-main.obj: ../SingleTon.h
-main.obj: ../Bar.h
-main.obj: ../Input.h
-main.obj: ../Note.h
-main.obj: ../play.h
 main.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/math.h
 main.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/ymath.h
 main.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/float.h
 main.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/time.h
+main.obj: ../button.h
+main.obj: ../Bar.h
+main.obj: ../Input.h
+main.obj: ../Note.h
 
 ../main.c: 
+../SingleTon.h: 
 ../cortex_m4.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stdio.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/linkage.h: 
@@ -93,15 +91,11 @@ C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h:
 ../Module.h: 
 ../MyLib.h: 
 ../play.h: 
-../SingleTon.h: 
-../Module.h: 
-../button.h: 
-../SingleTon.h: 
-../Bar.h: 
-../Input.h: 
-../Note.h: 
-../play.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/math.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/ymath.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/float.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/time.h: 
+../button.h: 
+../Bar.h: 
+../Input.h: 
+../Note.h: 

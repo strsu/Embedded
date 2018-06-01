@@ -15,8 +15,6 @@
 #define IMAGE2			0x80000
 #define IMAGE3			0xC0000
 #define IMAGE5			0x170000
-#define BAR_BLUE		0x1B0000
-#define BAR_RED			0x1F0000
 
 #define DLY_4 	16
 #define DLY_8	8
@@ -69,8 +67,7 @@ static int delay_cnt = 8;
 
 static int velocity = 6;
 
-void imageMove(int *buffer, int *noteX, int *noteY);
-void noteView(int *buffer, int *noteX_Location, int *noteY_Location);
+void noteView();
 void BarView(int *buffer, int *noteX_Location);
 
 void ScoreProcessing(int score);

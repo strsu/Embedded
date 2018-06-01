@@ -1,8 +1,7 @@
 #ifndef _BUTTON_H_
 #define _BUTTON_H_
-
-
-#include "SingleTon.h"
+#pragma once
+#include "cortex_m4.h"
 
 enum BTYPE {
 	SELECT = 0,
@@ -26,8 +25,10 @@ typedef struct {
 	int		nowID;
 } ButtonManager;
 
+#include "SingleTon.h"
+
 void ButtonUpdate(int _X, int _Y);
 
 int BTNCheckCollision(Button B, int _x, int _y);
 
-#endif _BUTTON_H_
+#endif /*_BUTTON_H_*/

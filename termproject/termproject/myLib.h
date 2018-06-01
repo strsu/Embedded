@@ -1,6 +1,5 @@
 #ifndef _MYLIB_H_
 #define _MYLIB_H_
-
 #pragma once
 #include "cortex_m4.h"
 #include "play.h"
@@ -40,9 +39,9 @@ static unsigned char fnd_pos[6] = {
 
 #define HDP_S 	479
 #define	VDP_S	271
+#define SCROLL	10
 #define LCD_HEIGHT	272
 #define LCD_WIDTH	480
-#define SCROLL	10
 #define DIV_MS	17
 
 #define LCD_ENTRY_MODE_REG        0x36
@@ -104,4 +103,5 @@ char UART_getkey(void);
 void UART_putch(uint8_t data);
 void UART_putstr(char* pt);
 void UART_printf(char *fmt, ...);
-#endif _MYLIB_H_
+
+#endif /* _MYLIB_H_ */
