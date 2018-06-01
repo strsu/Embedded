@@ -8,7 +8,8 @@
 #ifndef _PLAY_H_
 #define _PLAY_H_
 
-#include "SingleTon.h"
+#include "cortex_m4.h"
+#include "myLib.h"
 
 #define IMAGE0			0x00000
 #define IMAGE1			0x40000
@@ -68,7 +69,6 @@ static int delay_cnt = 8;
 static int velocity = 6;
 
 void noteView();
-void BarView(int *buffer, int *noteX_Location);
 
 void ScoreProcessing(int score);
 void KeyboardProcessing(unsigned char *buffer, uint8_t code);

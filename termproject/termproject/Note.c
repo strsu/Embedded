@@ -6,11 +6,14 @@
  */
 
 #include "Note.h"
+#include "SingleTon.h"
+#include "myLib.h"
+
+uint32_t g_ui32SysClock;
 
 void NoteInit() {
 	int i;
 	st.NM.speed = 8;
-	g_ui32SysClock = SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ | SYSCTL_OSC_MAIN | SYSCTL_USE_PLL | SYSCTL_CFG_VCO_480), 120000000);
 	
 	for (i = 0; i < NOTEMAX; i++) {
 		st.NM.note[i].active       = false;
@@ -38,20 +41,6 @@ void AddNote(int index) {
 	}
 }
 
-int CheckCollision(int y) {
-	int i;
-	for (i = 0; i < NOTEMAX; i++) {
-
-		if (!st.NM.note[i].active) { continue; }
-
-		int result = (st.NM.note[i].y - y > 0) ? st.NM.note[i].y - y : y - st.NM.note[i].y;
-
-		if (result <= st.NM.note[i].y + NOTEHEIGHT) { return result; }
-
-		break;
-	}
-}
-
 void NoteAction() {
 	int i, index;
 
@@ -68,7 +57,7 @@ void NoteAction() {
 		}
 		st.NM.note[i].y -= st.NM.speed;
 		// miss의 경우...
-		if (st.NM.note[i].y <= 0) {
+		if (st.NM.note[i].y <= BARHEIGHT/4) {
 			//g_ui32SysClock % 10;
 			st.NM.note[i].active = false;
 		}
@@ -83,7 +72,7 @@ void NoteDraw() {
 
 	for (j = 0; j < NOTEMAX; j++) {
 
-		//if (!st.NM.note[j].active) continue;
+		if (!st.NM.note[j].active) continue;
 		/* Note 이미지를 그려주는 코드 start */
 
 		WriteCommand(LCD_X_RAM_ADDR_REG);		// Set X

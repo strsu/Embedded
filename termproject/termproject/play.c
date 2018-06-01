@@ -1,17 +1,11 @@
 #include "play.h"
 
-
-
 void noteView() {
 	NoteUpdate();
+	InputUpdate();
+	BarUpdate();
 }
 
-void BarView(int *buffer, int *BarX_Location) {
-	int i;
-	for (i = 0; i < 4; i++) {
-		BarDraw(buffer, BarX_Location[i], 0, 72 + BarX_Location[i], 32, BAR_BLUE);
-	}
-}
 
 void StayWithMe(int *doing) {
 	if (*doing == 1) {

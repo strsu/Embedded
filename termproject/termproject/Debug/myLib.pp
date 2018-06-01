@@ -39,17 +39,6 @@ myLib.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/pin_map.h
 myLib.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/grlib.h
 myLib.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h
 myLib.obj: ../play.h
-myLib.obj: ../SingleTon.h
-myLib.obj: ../Module.h
-myLib.obj: ../play.h
-myLib.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/math.h
-myLib.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/ymath.h
-myLib.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/float.h
-myLib.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/time.h
-myLib.obj: ../button.h
-myLib.obj: ../Bar.h
-myLib.obj: ../Input.h
-myLib.obj: ../Note.h
 
 ../myLib.c: 
 ../myLib.h: 
@@ -90,14 +79,3 @@ C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/pin_map.h:
 C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/grlib.h: 
 C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h: 
 ../play.h: 
-../SingleTon.h: 
-../Module.h: 
-../play.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/math.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/ymath.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/float.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/time.h: 
-../button.h: 
-../Bar.h: 
-../Input.h: 
-../Note.h: 

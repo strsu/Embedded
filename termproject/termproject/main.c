@@ -65,7 +65,7 @@ int main(void) {
 
 
 	// Interupt init
-	Interrupt_init();
+	//Interrupt_init();
 
 	// LED 관련 함수
 	LED_init();
@@ -103,7 +103,6 @@ int main(void) {
 
 	while (1) {
 		noteView();
-		UART_putch(g_ui32SysClock % 30);
 		//delay(1000000);
 		//StayWithMe(&doing);
 		//doing--;

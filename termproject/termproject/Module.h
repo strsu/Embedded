@@ -21,4 +21,5 @@ int LED_swap(int dip);
 void Chattering_NoFlag(int push_data, int *cnt);
 void Chattering_Flag(int push_data, int *cnt, int *flag);
 int isHit(uint8_t code, int *y);
+
 #endif TERM_PROJECT_MODULE_H_

@@ -1,25 +1,19 @@
 #ifndef _INPUT_H_
 #define _INPUT_H_
 #pragma once
-#include "cortex_m4.h"
 
-enum ITYPE {
-
-	KEY1 = 0,
-	KEY2,
-	KEY3,
-	KEY4,
-	ENUM_MAX
-};
+#define KEYMAX		4
+#define FALSE			0
+#define TRUE			1
 
 typedef struct {
 
-	bool input[ENUM_MAX];
-	bool keyboard, push;
+	char input[KEYMAX];
+	char keyboard, push;
 } InputManager;
 
-#include "SingleTon.h"
-
+void InputInit();
 void InputUpdate();
+void InputAction();
 
 #endif /* _INPUT_H_ */

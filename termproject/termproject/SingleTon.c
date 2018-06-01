@@ -10,5 +10,6 @@
 void Init() {
 	NoteInit();
 	BarInit();
+	InputInit();
 }
 

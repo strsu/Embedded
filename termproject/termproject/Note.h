@@ -1,7 +1,6 @@
 #ifndef _NOTE_H_
 #define _NOTE_H_
 #pragma once
-#include "cortex_m4.h"
 
 #define BACKGROUND		0x80000
 #define NOTEIMAGE		0x130000
@@ -9,14 +8,14 @@
 #define NOTEWIDTH		52
 #define NOTEHEIGHT		16
 
+#include "MyLib.h"
 
-uint32_t g_ui32SysClock;
 static int xPosition[] = {14, 88, 162, 236};
 
 typedef struct {
-	int  x, y;
-	bool active;
-	int activeCnt;
+	int  x, y;				// Note 위치정보
+	bool active;			// Note 활성상태
+	int activeCnt;		// Note 활성상태까지 Delay
 }NOTE;
 
 typedef struct {
@@ -25,13 +24,10 @@ typedef struct {
 	NOTE note[NOTEMAX];
 }NoteManager;
 
-#include "SingleTon.h"
-
 void NoteInit();
 void NoteUpdate();
 void AddNote(int index);
+void NoteAction();
 void NoteDraw();
-
-int CheckCollision(int y);
 
 #endif /* _NOTE_H_ */

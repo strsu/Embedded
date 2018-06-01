@@ -6,6 +6,10 @@
  */
 
 #include "Bar.h"
+#include "SingleTon.h"
+#include "myLib.h"
+
+uint32_t g_ui32SysClock;
 
 void BarInit() {
 	int i;
@@ -15,83 +19,84 @@ void BarInit() {
 	st.BM.bar[3].x = 226;
 
 	for (i = 0; i < BAR_LMAX; i++) {
-		st.BM.bar[i].y = 0;
-		st.BM.bar[i].active = false;
+		st.BM.bar[i].active = FALSE;
 	}
 }
 
 void BarUpdate() {
-
-	if (!st.BM.bar[0].active) return;
-
-	if (st.IM.input[KEY1]) {
-
-		// effect 삽입
-		TouchBar(st.BM.bar[KEY1]);
-	}
-	if (st.IM.input[KEY2]) {
-
-	}
-	if (st.IM.input[KEY3]) {
-
-	}
-	if (st.IM.input[KEY4]) {
-
-	}
+	BarAction();
+	BarDraw();
 }
 
-void TouchBar(Bar C) {
-
-	int result;
-	result = CheckCollision(C.y);
-
-	if (result <= C.height) {
-
-		// result의 범위에 따라 perfect, great, good
-		// 열심히 하시게
-	}
-}
-
-void BarDraw(unsigned char *buffer, int x1, int y1, int x2, int y2, int image){
+void BarAction() {
 	int i;
+
+	for (i = 0; i < BAR_LMAX; i++) {
+		st.BM.bar[i].active = st.IM.input[i];
+	}
+}
+
+void BarUrteil(Bar C) {
+
+
+}
+
+void BarDraw(){
+	int i, j, x1, x2, y1, y2;
+	int BarImage;
 	unsigned long ulClockMS;
 
 	ulClockMS = g_ui32SysClock / (3 * 1000);
 
 	// 이 코드는 모니터의 어느 위치에 이미지를 뿌려줄지 결정하는 코드이다.
+	
+	for (j = 0; j < BAR_LMAX; j++) {
+		x1 = st.BM.bar[j].x;
+		x2 = st.BM.bar[j].x + BARWEITHD;
+		y1 = 0;
+		y2 = BARHEIGHT;
 
-	WriteCommand(LCD_X_RAM_ADDR_REG);		// Set X
-	WriteData(x1 >> 8);
-	WriteData(x1 & 0xFF);
-	WriteData(x2-1 >> 8);
-	WriteData(x2-1 & 0xff);
+		BarImage = st.BM.bar[j].active ? 0x1F0000 : 0x1B0000;
+		if (st.BM.bar[j].active) {
+			//Play(C1);
+			//DelayForPlay(DLY_4);
+			//BUZZER_clear();
+		}
+		st.BM.bar[j].active = FALSE;
 
-	WriteCommand(LCD_Y_RAM_ADDR_REG);		// Set Y
-	WriteData(y1 >> 8);
-	WriteData(y1 & 0xFF);
-	WriteData(y2-1 >> 8);
-	WriteData(y2-1 & 0xff);
+		WriteCommand(LCD_X_RAM_ADDR_REG);		// Set X
+		WriteData(x1 >> 8);
+		WriteData(x1 & 0xFF);
+		WriteData(x2 - 1 >> 8);
+		WriteData(x2 - 1 & 0xff);
 
-	WriteCommand(LCD_RAM_DATA_REG);
-	///// 여기까지
+		WriteCommand(LCD_Y_RAM_ADDR_REG);		// Set Y
+		WriteData(y1 >> 8);
+		WriteData(y1 & 0xFF);
+		WriteData(y2 - 1 >> 8);
+		WriteData(y2 - 1 & 0xff);
 
-	for(i = 0; i <= 32; ++i){
-		MX66L51235FRead(image + (i*(72)*2 + (i)*0), buffer, (72)*2);
+		WriteCommand(LCD_RAM_DATA_REG);
+		///// 여기까지
 
-		uDMAChannelControlSet(UDMA_CHANNEL_SW | UDMA_PRI_SELECT, UDMA_SIZE_16 | UDMA_SRC_INC_16 | UDMA_DST_INC_NONE | UDMA_ARB_8);
-		uDMAChannelTransferSet(UDMA_CHANNEL_SW | UDMA_PRI_SELECT, UDMA_MODE_AUTO, &buffer[0], (void *)0x44050018, (72)/2);
-		uDMAChannelEnable(UDMA_CHANNEL_SW);
-		uDMAChannelRequest(UDMA_CHANNEL_SW);
+		for (i = 0; i <= BARHEIGHT; ++i) {
+			MX66L51235FRead(BarImage + (i*(BARWEITHD) * 2), buffer, (BARWEITHD) * 2);
 
-		SysCtlDelay(ulClockMS /DIV_MS);
+			uDMAChannelControlSet(UDMA_CHANNEL_SW | UDMA_PRI_SELECT, UDMA_SIZE_16 | UDMA_SRC_INC_16 | UDMA_DST_INC_NONE | UDMA_ARB_8);
+			uDMAChannelTransferSet(UDMA_CHANNEL_SW | UDMA_PRI_SELECT, UDMA_MODE_AUTO, &buffer[0], (void *)0x44050018, (BARWEITHD) / 2);
+			uDMAChannelEnable(UDMA_CHANNEL_SW);
+			uDMAChannelRequest(UDMA_CHANNEL_SW);
 
-		uDMAChannelControlSet(UDMA_CHANNEL_SW | UDMA_PRI_SELECT, UDMA_SIZE_16 | UDMA_SRC_INC_16 | UDMA_DST_INC_NONE | UDMA_ARB_8);
-		uDMAChannelTransferSet(UDMA_CHANNEL_SW | UDMA_PRI_SELECT, UDMA_MODE_AUTO, &buffer[(72)], (void *)0x44050018, (72)/2);
-		uDMAChannelEnable(UDMA_CHANNEL_SW);
-		uDMAChannelRequest(UDMA_CHANNEL_SW);
-		SysCtlDelay(ulClockMS /DIV_MS);
+			SysCtlDelay(ulClockMS / DIV_MS);
+
+			uDMAChannelControlSet(UDMA_CHANNEL_SW | UDMA_PRI_SELECT, UDMA_SIZE_16 | UDMA_SRC_INC_16 | UDMA_DST_INC_NONE | UDMA_ARB_8);
+			uDMAChannelTransferSet(UDMA_CHANNEL_SW | UDMA_PRI_SELECT, UDMA_MODE_AUTO, &buffer[(72)], (void *)0x44050018, (BARWEITHD) / 2);
+			uDMAChannelEnable(UDMA_CHANNEL_SW);
+			uDMAChannelRequest(UDMA_CHANNEL_SW);
+			SysCtlDelay(ulClockMS / DIV_MS);
+		}
+
+		SetFullFrame();
 	}
-
-	SetFullFrame();
 }
 

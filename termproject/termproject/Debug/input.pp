@@ -2,6 +2,9 @@
 
 input.obj: ../input.c
 input.obj: ../input.h
+input.obj: ../SingleTon.h
+input.obj: ../screen.h
+input.obj: ../MyLib.h
 input.obj: ../cortex_m4.h
 input.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stdio.h
 input.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/linkage.h
@@ -38,20 +41,16 @@ input.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/timer.h
 input.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/pin_map.h
 input.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/grlib.h
 input.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h
-input.obj: ../SingleTon.h
-input.obj: ../Module.h
-input.obj: ../MyLib.h
 input.obj: ../play.h
-input.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/math.h
-input.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/ymath.h
-input.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/float.h
-input.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/time.h
-input.obj: ../button.h
 input.obj: ../Bar.h
 input.obj: ../Note.h
+input.obj: ../collision.h
 
 ../input.c: 
 ../input.h: 
+../SingleTon.h: 
+../screen.h: 
+../MyLib.h: 
 ../cortex_m4.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stdio.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/linkage.h: 
@@ -88,14 +87,7 @@ C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/timer.h:
 C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/pin_map.h: 
 C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/grlib.h: 
 C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h: 
-../SingleTon.h: 
-../Module.h: 
-../MyLib.h: 
 ../play.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/math.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/ymath.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/float.h: 
-C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/time.h: 
-../button.h: 
 ../Bar.h: 
 ../Note.h: 
+../collision.h: 
