@@ -10,14 +10,15 @@
 #include "myLib.h"
 
 uint32_t g_ui32SysClock;
+SingleTon *stn;
 
 void NoteInit() {
 	int i;
-	st.NM.speed = 8;
-	
+	stn = getSingleTon();
+	stn->NM.speed = 8;
 	for (i = 0; i < NOTEMAX; i++) {
-		st.NM.note[i].active       = false;
-		st.NM.note[i].activeCnt  = 25 + ((i + 1) * 129) % 40;
+		stn->NM.note[i].active       = false;
+		stn->NM.note[i].activeCnt  = 25 + ((i + 1) * 129) % 40;
 	}
 }
 
@@ -31,11 +32,11 @@ void AddNote(int index) {
 	int i;
 
 	for (i = 0; i < NOTEMAX; i++) {
-		if (st.NM.note[i].active) continue;
+		if (stn->NM.note[i].active) continue;
 
-		st.NM.note[i].active = true;
-		st.NM.note[i].x			= xPosition[index];
-		st.NM.note[i].y			= 256;
+		stn->NM.note[i].active	= true;
+		stn->NM.note[i].x		= xPosition[index];
+		stn->NM.note[i].y		= 256;
 
 		break;
 	}
@@ -46,20 +47,20 @@ void NoteAction() {
 
 	for (i = 0; i < NOTEMAX; i++) {
 
-		if (!st.NM.note[i].active) {				// Note 가 비활성 이면
-			st.NM.note[i].activeCnt--;
-			if (st.NM.note[i].activeCnt < 0) {		// Note 생성 Delay 끝
-				index								=  i % 4; // g_ui32SysClock % 4;
-				st.NM.note[i].activeCnt	= 25 + ((i + 1) * 129) % 40;
+		if (!stn->NM.note[i].active) {					// Note 가 비활성 이면
+			stn->NM.note[i].activeCnt--;
+			if (stn->NM.note[i].activeCnt < 0) {		// Note 생성 Delay 끝
+				index						=  i % 4;	// g_ui32SysClock % 4;
+				stn->NM.note[i].activeCnt	= 25 + ((i + 1) * 129) % 40;
 				AddNote(index);
 			}
 			continue;
 		}
-		st.NM.note[i].y -= st.NM.speed;
+		stn->NM.note[i].y -= stn->NM.speed;
 		// miss의 경우...
-		if (st.NM.note[i].y <= BARHEIGHT/4) {
+		if (stn->NM.note[i].y <= 0) {
 			//g_ui32SysClock % 10;
-			st.NM.note[i].active = false;
+			stn->NM.note[i].active = false;
 		}
 	}
 }
@@ -72,20 +73,20 @@ void NoteDraw() {
 
 	for (j = 0; j < NOTEMAX; j++) {
 
-		if (!st.NM.note[j].active) continue;
+		if (!stn->NM.note[j].active) continue;
 		/* Note 이미지를 그려주는 코드 start */
 
 		WriteCommand(LCD_X_RAM_ADDR_REG);		// Set X
-		WriteData(st.NM.note[j].x >> 8);
-		WriteData(st.NM.note[j].x & 0xFF);
-		WriteData(st.NM.note[j].x + NOTEWIDTH - 1 >> 8);
-		WriteData(st.NM.note[j].x + NOTEWIDTH - 1 & 0xff);
+		WriteData(stn->NM.note[j].x >> 8);
+		WriteData(stn->NM.note[j].x & 0xFF);
+		WriteData(stn->NM.note[j].x + NOTEWIDTH - 1 >> 8);
+		WriteData(stn->NM.note[j].x + NOTEWIDTH - 1 & 0xff);
 
 		WriteCommand(LCD_Y_RAM_ADDR_REG);		// Set Y
-		WriteData(st.NM.note[j].y >> 8);
-		WriteData(st.NM.note[j].y & 0xFF);
-		WriteData(st.NM.note[j].y + NOTEHEIGHT - 1 >> 8);
-		WriteData(st.NM.note[j].y + NOTEHEIGHT - 1 & 0xff);
+		WriteData(stn->NM.note[j].y >> 8);
+		WriteData(stn->NM.note[j].y & 0xFF);
+		WriteData(stn->NM.note[j].y + NOTEHEIGHT - 1 >> 8);
+		WriteData(stn->NM.note[j].y + NOTEHEIGHT - 1 & 0xff);
 
 		WriteCommand(LCD_RAM_DATA_REG);
 		///// 여기까지
@@ -113,10 +114,10 @@ void NoteDraw() {
 
 		/* 배경 이미지를 복원해주는 코드 start */
 
-		x1 = st.NM.note[j].x;
-		x2 = st.NM.note[j].x + NOTEWIDTH;
-		y1 = st.NM.note[j].y + NOTEHEIGHT;
-		y2 = st.NM.note[j].y + NOTEHEIGHT + st.NM.speed;
+		x1 = stn->NM.note[j].x;
+		x2 = stn->NM.note[j].x + NOTEWIDTH;
+		y1 = stn->NM.note[j].y + NOTEHEIGHT;
+		y2 = stn->NM.note[j].y + NOTEHEIGHT + stn->NM.speed;
 
 		WriteCommand(LCD_X_RAM_ADDR_REG);		// Set X
 		WriteData(x1 >> 8);

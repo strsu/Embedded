@@ -5,6 +5,7 @@ collision.obj: ../collision.h
 collision.obj: ../SingleTon.h
 collision.obj: ../screen.h
 collision.obj: ../MyLib.h
+collision.obj: ../play.h
 collision.obj: ../cortex_m4.h
 collision.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stdio.h
 collision.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/linkage.h
@@ -41,16 +42,19 @@ collision.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/timer.h
 collision.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/pin_map.h
 collision.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/grlib.h
 collision.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h
-collision.obj: ../play.h
 collision.obj: ../Bar.h
-collision.obj: ../Input.h
+collision.obj: ../input.h
 collision.obj: ../Note.h
+collision.obj: ../score.h
+collision.obj: ../scene.h
+collision.obj: ../music.h
 
 ../collision.c: 
 ../collision.h: 
 ../SingleTon.h: 
 ../screen.h: 
 ../MyLib.h: 
+../play.h: 
 ../cortex_m4.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stdio.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/linkage.h: 
@@ -87,7 +91,9 @@ C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/timer.h:
 C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/pin_map.h: 
 C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/grlib.h: 
 C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h: 
-../play.h: 
 ../Bar.h: 
-../Input.h: 
+../input.h: 
 ../Note.h: 
+../score.h: 
+../scene.h: 
+../music.h: 

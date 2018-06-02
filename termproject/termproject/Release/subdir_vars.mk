@@ -11,12 +11,13 @@ C_SRCS += \
 ../Module.c \
 ../Note.c \
 ../SingleTon.c \
-../button.c \
+../collision.c \
 ../input.c \
 ../main.c \
 ../myLib.c \
 ../pinout.c \
 ../play.c \
+../screen.c \
 ../tm4c129xnczad_startup_ccs.c 
 
 OBJS += \
@@ -24,12 +25,13 @@ OBJS += \
 ./Module.obj \
 ./Note.obj \
 ./SingleTon.obj \
-./button.obj \
+./collision.obj \
 ./input.obj \
 ./main.obj \
 ./myLib.obj \
 ./pinout.obj \
 ./play.obj \
+./screen.obj \
 ./tm4c129xnczad_startup_ccs.obj 
 
 C_DEPS += \
@@ -37,12 +39,13 @@ C_DEPS += \
 ./Module.pp \
 ./Note.pp \
 ./SingleTon.pp \
-./button.pp \
+./collision.pp \
 ./input.pp \
 ./main.pp \
 ./myLib.pp \
 ./pinout.pp \
 ./play.pp \
+./screen.pp \
 ./tm4c129xnczad_startup_ccs.pp 
 
 C_DEPS__QUOTED += \
@@ -50,12 +53,13 @@ C_DEPS__QUOTED += \
 "Module.pp" \
 "Note.pp" \
 "SingleTon.pp" \
-"button.pp" \
+"collision.pp" \
 "input.pp" \
 "main.pp" \
 "myLib.pp" \
 "pinout.pp" \
 "play.pp" \
+"screen.pp" \
 "tm4c129xnczad_startup_ccs.pp" 
 
 OBJS__QUOTED += \
@@ -63,12 +67,13 @@ OBJS__QUOTED += \
 "Module.obj" \
 "Note.obj" \
 "SingleTon.obj" \
-"button.obj" \
+"collision.obj" \
 "input.obj" \
 "main.obj" \
 "myLib.obj" \
 "pinout.obj" \
 "play.obj" \
+"screen.obj" \
 "tm4c129xnczad_startup_ccs.obj" 
 
 C_SRCS__QUOTED += \
@@ -76,12 +81,13 @@ C_SRCS__QUOTED += \
 "../Module.c" \
 "../Note.c" \
 "../SingleTon.c" \
-"../button.c" \
+"../collision.c" \
 "../input.c" \
 "../main.c" \
 "../myLib.c" \
 "../pinout.c" \
 "../play.c" \
+"../screen.c" \
 "../tm4c129xnczad_startup_ccs.c" 
 
 

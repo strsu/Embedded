@@ -11,5 +11,11 @@ void Init() {
 	NoteInit();
 	BarInit();
 	InputInit();
+	CollisionInit();
+	ScoreInit();
+	MusicInit();
 }
 
+SingleTon* getSingleTon() {
+	return &st;
+}

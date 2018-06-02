@@ -2,14 +2,14 @@
 #define _INPUT_H_
 #pragma once
 
+#include "cortex_m4.h"
+
 #define KEYMAX		4
-#define FALSE			0
-#define TRUE			1
 
 typedef struct {
 
-	char input[KEYMAX];
-	char keyboard, push;
+	bool input[KEYMAX];
+	bool keyboard, push;
 } InputManager;
 
 void InputInit();

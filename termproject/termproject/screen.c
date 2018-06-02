@@ -9,6 +9,7 @@
 #include "SingleTon.h"
 #include "cortex_m4.h"
 
+
 void ScreenUpdate(int _X, int _Y) {
 	int i;
 	st.SM.nowID = -1;

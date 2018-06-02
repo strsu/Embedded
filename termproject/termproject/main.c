@@ -96,6 +96,8 @@ int main(void) {
 
 	/* initial setting finish*/
 
+	LoadingScene();
+
 	// SingleTon init
 	Init();
 

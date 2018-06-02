@@ -11,15 +11,17 @@
 
 uint32_t g_ui32SysClock;
 
+SingleTon *stb;
+
 void BarInit() {
 	int i;
-	st.BM.bar[0].x = 4;
-	st.BM.bar[1].x = 78;
-	st.BM.bar[2].x = 152;
-	st.BM.bar[3].x = 226;
-
+	stb = getSingleTon();
+	stb->BM.bar[0].x = 4;
+	stb->BM.bar[1].x = 78;
+	stb->BM.bar[2].x = 152;
+	stb->BM.bar[3].x = 226;
 	for (i = 0; i < BAR_LMAX; i++) {
-		st.BM.bar[i].active = FALSE;
+		stb->BM.bar[i].active = false;
 	}
 }
 
@@ -32,13 +34,8 @@ void BarAction() {
 	int i;
 
 	for (i = 0; i < BAR_LMAX; i++) {
-		st.BM.bar[i].active = st.IM.input[i];
+		stb->BM.bar[i].active = stb->IM.input[i];
 	}
-}
-
-void BarUrteil(Bar C) {
-
-
 }
 
 void BarDraw(){
@@ -51,18 +48,13 @@ void BarDraw(){
 	// 이 코드는 모니터의 어느 위치에 이미지를 뿌려줄지 결정하는 코드이다.
 	
 	for (j = 0; j < BAR_LMAX; j++) {
-		x1 = st.BM.bar[j].x;
-		x2 = st.BM.bar[j].x + BARWEITHD;
+		x1 = stb->BM.bar[j].x;
+		x2 = stb->BM.bar[j].x + BARWEITHD;
 		y1 = 0;
 		y2 = BARHEIGHT;
 
-		BarImage = st.BM.bar[j].active ? 0x1F0000 : 0x1B0000;
-		if (st.BM.bar[j].active) {
-			//Play(C1);
-			//DelayForPlay(DLY_4);
-			//BUZZER_clear();
-		}
-		st.BM.bar[j].active = FALSE;
+		BarImage = stb->BM.bar[j].active ? 0x1F0000 : 0x1B0000;
+		stb->BM.bar[j].active = false;
 
 		WriteCommand(LCD_X_RAM_ADDR_REG);		// Set X
 		WriteData(x1 >> 8);

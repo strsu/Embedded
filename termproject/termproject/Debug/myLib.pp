@@ -2,6 +2,7 @@
 
 myLib.obj: ../myLib.c
 myLib.obj: ../myLib.h
+myLib.obj: ../play.h
 myLib.obj: ../cortex_m4.h
 myLib.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stdio.h
 myLib.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/linkage.h
@@ -38,10 +39,10 @@ myLib.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/timer.h
 myLib.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/pin_map.h
 myLib.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/grlib.h
 myLib.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h
-myLib.obj: ../play.h
 
 ../myLib.c: 
 ../myLib.h: 
+../play.h: 
 ../cortex_m4.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stdio.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/linkage.h: 
@@ -78,4 +79,3 @@ C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/timer.h:
 C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/pin_map.h: 
 C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/grlib.h: 
 C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h: 
-../play.h: 

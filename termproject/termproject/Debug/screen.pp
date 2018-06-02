@@ -3,6 +3,7 @@
 screen.obj: ../screen.c
 screen.obj: ../screen.h
 screen.obj: ../MyLib.h
+screen.obj: ../play.h
 screen.obj: ../cortex_m4.h
 screen.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stdio.h
 screen.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/linkage.h
@@ -39,16 +40,19 @@ screen.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/timer.h
 screen.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/pin_map.h
 screen.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/grlib.h
 screen.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h
-screen.obj: ../play.h
 screen.obj: ../SingleTon.h
 screen.obj: ../Bar.h
-screen.obj: ../Input.h
+screen.obj: ../input.h
 screen.obj: ../Note.h
 screen.obj: ../collision.h
+screen.obj: ../score.h
+screen.obj: ../scene.h
+screen.obj: ../music.h
 
 ../screen.c: 
 ../screen.h: 
 ../MyLib.h: 
+../play.h: 
 ../cortex_m4.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stdio.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/linkage.h: 
@@ -85,9 +89,11 @@ C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/timer.h:
 C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/pin_map.h: 
 C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/grlib.h: 
 C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h: 
-../play.h: 
 ../SingleTon.h: 
 ../Bar.h: 
-../Input.h: 
+../input.h: 
 ../Note.h: 
 ../collision.h: 
+../score.h: 
+../scene.h: 
+../music.h: 

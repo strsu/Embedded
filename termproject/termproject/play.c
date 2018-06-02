@@ -2,8 +2,11 @@
 
 void noteView() {
 	NoteUpdate();
+	ScollBell();
 	InputUpdate();
 	BarUpdate();
+	CollisionUpdate();
+	ScoreUpdate();
 }
 
 

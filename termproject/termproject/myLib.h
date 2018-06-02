@@ -1,7 +1,6 @@
 #ifndef _MYLIB_H_
 #define _MYLIB_H_
 #pragma once
-#include "cortex_m4.h"
 #include "play.h"
 
 /*  C1 : µµ , D1 : ·¹ , E1 : ¹Ì ...

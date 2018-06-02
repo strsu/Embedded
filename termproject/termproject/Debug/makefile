@@ -17,9 +17,12 @@ ORDERED_OBJS += \
 "./collision.obj" \
 "./input.obj" \
 "./main.obj" \
+"./music.obj" \
 "./myLib.obj" \
 "./pinout.obj" \
 "./play.obj" \
+"./scene.obj" \
+"./score.obj" \
 "./screen.obj" \
 "./tm4c129xnczad_startup_ccs.obj" \
 "./third_party/fatfs/src/option/cc932.obj" \
@@ -173,8 +176,8 @@ Term_Project.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "Bar.pp" "Module.pp" "Note.pp" "SingleTon.pp" "collision.pp" "input.pp" "main.pp" "myLib.pp" "pinout.pp" "play.pp" "screen.pp" "tm4c129xnczad_startup_ccs.pp" "third_party\fatfs\src\option\cc932.pp" "third_party\fatfs\src\ff.pp" "third_party\fatfs\port\mmc-dk-tm4c129x.pp" "drivers\mx66l51235f.pp" 
-	-$(RM) "Bar.obj" "Module.obj" "Note.obj" "SingleTon.obj" "collision.obj" "input.obj" "main.obj" "myLib.obj" "pinout.obj" "play.obj" "screen.obj" "tm4c129xnczad_startup_ccs.obj" "third_party\fatfs\src\option\cc932.obj" "third_party\fatfs\src\ff.obj" "third_party\fatfs\port\mmc-dk-tm4c129x.obj" "drivers\mx66l51235f.obj" 
+	-$(RM) "Bar.pp" "Module.pp" "Note.pp" "SingleTon.pp" "collision.pp" "input.pp" "main.pp" "music.pp" "myLib.pp" "pinout.pp" "play.pp" "scene.pp" "score.pp" "screen.pp" "tm4c129xnczad_startup_ccs.pp" "third_party\fatfs\src\option\cc932.pp" "third_party\fatfs\src\ff.pp" "third_party\fatfs\port\mmc-dk-tm4c129x.pp" "drivers\mx66l51235f.pp" 
+	-$(RM) "Bar.obj" "Module.obj" "Note.obj" "SingleTon.obj" "collision.obj" "input.obj" "main.obj" "music.obj" "myLib.obj" "pinout.obj" "play.obj" "scene.obj" "score.obj" "screen.obj" "tm4c129xnczad_startup_ccs.obj" "third_party\fatfs\src\option\cc932.obj" "third_party\fatfs\src\ff.obj" "third_party\fatfs\port\mmc-dk-tm4c129x.obj" "drivers\mx66l51235f.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 
