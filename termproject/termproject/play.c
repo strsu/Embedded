@@ -1,6 +1,10 @@
 #include "play.h"
+#include "SingleTon.h"
 
 void noteView() {
+	//MenuScene();
+	//NumScene();
+	//NumDraw();
 	NoteUpdate();
 	ScollBell();
 	InputUpdate();

@@ -38,8 +38,18 @@ play.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/timer.h
 play.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/pin_map.h
 play.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/grlib.h
 play.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h
+play.obj: ../touch.h
 play.obj: ../myLib.h
 play.obj: ../play.h
+play.obj: ../SingleTon.h
+play.obj: ../screen.h
+play.obj: ../Bar.h
+play.obj: ../input.h
+play.obj: ../Note.h
+play.obj: ../collision.h
+play.obj: ../score.h
+play.obj: ../scene.h
+play.obj: ../music.h
 
 ../play.c: 
 ../play.h: 
@@ -79,5 +89,15 @@ C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/timer.h:
 C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/pin_map.h: 
 C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/grlib.h: 
 C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h: 
+../touch.h: 
 ../myLib.h: 
 ../play.h: 
+../SingleTon.h: 
+../screen.h: 
+../Bar.h: 
+../input.h: 
+../Note.h: 
+../collision.h: 
+../score.h: 
+../scene.h: 
+../music.h: 

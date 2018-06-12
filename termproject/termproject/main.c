@@ -1,4 +1,6 @@
 #include "SingleTon.h"
+#include "report7.h"
+#include "math.h"
 
 #define COLOR_BLUE		0x001f
 #define COLOR_GREEN		0x07E0
@@ -6,43 +8,31 @@
 #define COLOR_WHITE		0xFFFF
 #define COLOR_BLACK		0x0000
 
+unsigned char buffer[LCD_WIDTH * LCD_HEIGHT];
+extern int32_t user_X, user_Y;
 uint32_t g_ui32SysClock;
 
-unsigned char buffer[LCD_WIDTH * LCD_HEIGHT];
+//#define 	Wait_RTC_Control 	while (!(HIBCTL & 0x80000000))
+volatile unsigned int variable0 = 0;
 
 void _user_interrupt_handler_1(void);
 void _user_interrupt_handler_2(void);
 void _user_interrupt_handler_3(void);
 void _user_interrupt_handler_4(void);
+void _user_Bluetooth_Interrupt_Handler(void);
+int32_t PointerMessage(uint32_t ui32Message, int32_t i32X, int32_t i32Y);
 
 int cnt;
+int move[2];
+int colors2[] = {0x001f, 0x07E0, 0xF800, 0x0000};
 
 int main(void) {
-	g_ui32SysClock = SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ | SYSCTL_OSC_MAIN | SYSCTL_USE_PLL | SYSCTL_CFG_VCO_480), 120000000);
-
-
-	int x, y[7] = { 0,0,0,0,0,0,0 };
-
-	int scrollLR = 5;
-	int scrollUN = 3;
-	int color = 0xFFCC33;
-
-	int locationX1[7] = { 10, 70, 130, 190, 270, 330, 390 };
-	int locationX2[7] = { 50, 110, 170, 250, 310, 370, 430 };
-	int score_Flag[7] = { 0, 0, 0, 0, 0, 0, 0 };
-	int location;
-	int score = 0;
-	int doing = 0;
-	int i, j, temp;
-	int schoolBell_Code[24] = { G1,G1,A1,A1,G1,G1,E1,G1,G1,E1,E1,D1,G1,G1,A1,A1,G1,G1,E1,G1,G1,D1,E1,C1 };
-	// note relative variable
-	int noteX, noteY;
-
+	g_ui32SysClock = SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
+											SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
+											SYSCTL_CFG_VCO_480), 120000000);
 	int push_data;
 	int dip_data;
 	int reverse_dip;
-
-	char *str;
 
 	// UART 관련 함수
 	uint8_t code;
@@ -51,12 +41,21 @@ int main(void) {
 	int   BRDI;
 	int   BRDF;
 
+	//RTC
+	int rtc_time0;
+	int rtc_time1;
+
+	int time_sec = 0;
+	int time_flag = 0;
+
 	//uart baud rate(p.1339)
 	BRD = (float)g_ui32SysClock / (16 * 115200);
 	BRDI = (int)BRD;
 	BRDF = (int)(((BRD - (int)BRD) * 64) + 0.5);
 
+
 	UART_init(BRD, BRDI, BRDF);
+	Bluetooth_init(BRD, BRDI, BRDF);
 
 	UART_printf("//**************************************//\n\r");
 	UART_printf("//***********  Initialize  *************//\n\r");
@@ -86,32 +85,85 @@ int main(void) {
 	TIMER_init();
 	WDTinitISR();
 
+	//Touch
+	TouchScreenInit(g_ui32SysClock);
+	TouchScreenCallbackSet(PointerMessage);
+
 	LCD_Init(g_ui32SysClock);
 
 	GPIO_WRITE(GPIO_PORTD, 0x10, 0x10);  // buzzer ON
 	GPTMCTL = GPTMCTL | 0x41;   		 // timer enable
 
 	BUZZER_clear();
+
+	RTC_Init();
+
+	//********** Set Real Clock ************//
+		HIBLOCK = 0xA3359554;
+
+		while (!(HIBCTL & 0x80000000));
+		HIBCALLD0 = (12 << 16) | (34 << 8) | 56;
+		// (Hour << 16) | (Min << 8) | Sec
+		while (!(HIBCTL & 0x80000000));
+
+		HIBCALLD1 = (0x0 << 24) | (16 << 16) | (5 << 8) | 31;
+		// (Day of Week << 24) | (Year << 16) | (Month << 8) | Day of Month
+		while (!(HIBCTL & 0x80000000));
+
+		HIBLOCK = 0;
+		while (!(HIBCTL & 0x80000000));
+
+		rtc_time0 = HIBCAL0;	// hour, min, sec
+		rtc_time1 = HIBCAL1;	// year, month, day
+		//**************************************//
+
+		time_sec = rtc_time0 & 0x3f;
+
+		// HIBCTL = HIBCTL | 0x01;	// 타이머 활성
+		// HIBCTL = HIBCTL & ~0x01;	// 타이머 비활성
+
 	delay(1000000);
 
 	/* initial setting finish*/
 
-	LoadingScene();
-
 	// SingleTon init
 	Init();
+	DrawRect(0,0,480,272,COLOR_WHITE);
+	//LoadingScene();
+	//DrawImage(buffer, 0, 0, 480, 272, BACKGROUND);
 
-	DrawImage(buffer, 0, 0, 480, 272, BACKGROUND);
+	//MenuScene();
+	//ScoreDraw();
+	//ComboDraw();
+	//GradeDraw();
+	//DrawImage(buffer, 0, 0, 12, 16, NUM0);
+	//DrawImage(buffer, 0, 0, 480, 272, BACKGROUND);
 
-	while (1) {
-		noteView();
-		//delay(1000000);
-		//StayWithMe(&doing);
-		//doing--;
+	while (1){
+		rtc_time0 = HIBCAL0;
+		rtc_time1 = HIBCAL1;
+
+		WRITE_FND(0,((rtc_time0 >> 16) & 0x1f) / 10);
+		WRITE_FND_DOT(1,((rtc_time0 >> 16) & 0x1f) % 10);
+		WRITE_FND(2,((rtc_time0 >> 8) & 0x3f) / 10);
+		WRITE_FND_DOT(3,((rtc_time0 >> 8) & 0x3f) % 10);
+		WRITE_FND(4,((rtc_time0) & 0x3f) / 10);
+		WRITE_FND_DOT(5,((rtc_time0) & 0x3f) % 10);
 	}
-	cnt = 0;
 
-	//while(1);
+
+	move[0] = 10;
+	move[1] = 10;
+	cnt = 0;
+	while (1) {
+		code = UART_getkey();
+			if(code >= 'a'-97 && code <= 'z'+5) {
+					Bluetooth_PutCh(code);
+				}
+
+		//noteView();
+	}
+
 	while (1) {
 		//push_data = (~GPIO_READ(GPIO_PORTP, (0x01 << 1)) >> 1) & (~GPIO_READ(GPIO_PORTN, (0x01 << 3)) >> 2) & \
 							  (~GPIO_READ(GPIO_PORTE, (0x01 << 5)) >> 3) & (~GPIO_READ(GPIO_PORTK, (0x01 << 7)) >> 4);
@@ -125,32 +177,6 @@ int main(void) {
 		 					  (GPIO_READ(GPIO_PORTA, 0x80) >> 5) | (GPIO_READ(GPIO_PORTB, 0x08) >> 0) |	\
 		 					  (GPIO_READ(GPIO_PORTQ, 0x40) >> 2) | (GPIO_READ(GPIO_PORTQ, 0x20) >> 0) |	\
 		 					  (GPIO_READ(GPIO_PORTQ, 0x10) << 2) | (GPIO_READ(GPIO_PORTG, 0x40) << 1);
-		//DrawLine(24, 24, 240, 240, 0x3333CC);
-		/*code = UART_getkey();
-		KeyboardProcessing(buffer, code);
-		//Buzzer_play(&cnt, &doing);
-		doing--;
-		StayWithMe(&cnt, &doing);
-		for(location = 0;location<7;location++) {
-			DrawRect(locationX1[location], 240 - y[location], locationX2[location], 260 - y[location], color);
-			RestoreBackground(buffer,locationX1[location],250 - y[location],locationX2[location]+4,260 - y[location]+1,IMAGE2);
-			score += isHit(code, y);
-			ScoreProcessing(score);
-		}
-		y[0] += 10;		y[1] += 5;		y[2] += 8;
-		y[3] += 10;		y[4] += 5;		y[5] += 10;		y[6] += 5;
-
-		for(location = 0;location<7;location++) {
-			if(y[location] >= 230) {
-				y[location] = 0;
-				//y[location] = schoolBell_Code[cnt]%24;
-				RestoreBackground(buffer,0,0,474,31,IMAGE2);
-			}
-			ScoreProcessing(score);
-		}
-		RestoreBackground(buffer,10,30,50+4,32+1,0x80000);*/
-		//CharacterDraw(buffer,0,0,115,122,IMAGE3);
-		//score++;
 	} // end while
 
 }
@@ -222,3 +248,39 @@ void _user_interrupt_handler_4(void) {
 	INTUNPEND2 = INTPEND2;
 }
 
+int32_t PointerMessage(uint32_t ui32Message, int32_t i32X, int32_t i32Y){
+    if(user_X >= 0 && user_X < 480 && user_Y >= 0 && user_Y < 272){
+    	//prob_1((int)user_X, (int)user_Y);
+    	//prob_2((int)user_X, (int)user_Y);
+    	prob_3((int)user_X, (int)user_Y);
+    }
+    delay(1000000);
+	return 0;
+}
+
+void _user_Bluetooth_Interrupt_Handler(void) {
+	char Bluetooth_Data;
+
+	int loX = 100;
+	int loY = 100;
+
+	UART3IM = UART3IM & ~(0x1 << 4);
+
+	Bluetooth_Data = Bluetooth_GetKey();	// 외부 장치로부터 받은 데이터를 저장
+	UART_putch(Bluetooth_Data);				// 터미널에 해당 데이터 출력
+	DrawRect(loX+move[0],loY+move[1],loX+20+move[0],loY+20+move[1],COLOR_WHITE);
+	switch(Bluetooth_Data) {
+	case 'w' : move[1]+=10; break;
+	case 's' : move[1]-=10; break;
+	case 'a' : move[0]-=10; break;
+	case 'd' : move[0]+=10; break;
+	case '1' : cnt = 0; break;
+	case '2' : cnt = 1; break;
+	case '3' : cnt = 2; break;
+	}
+	DrawRect(loX+move[0],loY+move[1],loX+20+move[0],loY+20+move[1],colors2[cnt]);
+
+	UART3IM = UART3IM | (0x1 << 4);
+	UART3ICR = UART3ICR | (0x1 << 4);
+	INTUNPEND1 = INTPEND1;
+}

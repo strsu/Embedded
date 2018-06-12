@@ -14,6 +14,7 @@ void Init() {
 	CollisionInit();
 	ScoreInit();
 	MusicInit();
+	SceneInit();
 }
 
 SingleTon* getSingleTon() {

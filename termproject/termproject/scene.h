@@ -29,14 +29,75 @@
 #define NUM8			0x830000
 #define NUM9			0x870000
 
+#define NUMWIDTH		12
+#define NUMHEIGHT		16
+#define NUMCNT			10
+
+#define GRADE_S			0x8B0000
+#define GRADE_A			0x8F0000
+#define GRADE_B			0x930000
+#define GRADE_C			0x970000
+#define GRADE_D			0x9B0000
+#define GRADE_F			0x9F0000
+
+#define GRADEWIDTH		80
+#define GRADEHEIGHT		80
+#define GRADECNT		6
+
+#define ALPHA_a			0xA30000
+#define ALPHA_b			0xA70000
+#define ALPHA_c			0xAB0000
+#define ALPHA_d			0xAF0000
+#define ALPHA_e			0xB30000
+#define ALPHA_f			0xB70000
+#define ALPHA_g			0xBB0000
+#define ALPHA_h			0xBF0000
+#define ALPHA_i			0xC30000
+#define ALPHA_j			0xC70000
+#define ALPHA_k			0xCB0000
+#define ALPHA_l			0xCF0000
+#define ALPHA_m			0xD30000
+#define ALPHA_n			0xD70000
+#define ALPHA_o			0xDB0000
+#define ALPHA_p			0xDF0000
+#define ALPHA_q			0xE30000
+#define ALPHA_r			0xE70000
+#define ALPHA_s			0xEB0000
+#define ALPHA_t			0xEF0000
+#define ALPHA_u			0xF30000
+#define ALPHA_v			0xF70000
+#define ALPHA_w			0xFB0000
+#define ALPHA_x			0xFF0000
+#define ALPHA_y			0x1030000
+#define ALPHA_z			0x1070000
+#define ALPHA__			0x10B0000	// 현재 마지막 이미지 주소
+
+#define ALPHAWIDTH		12
+#define ALPHAHEIGHT		16
+#define ALPHACNT		27
+
+typedef struct {
+	int finalScore[NUMCNT];
+	int finalCombo[NUMCNT];
+	int ScoreLocation[NUMCNT];
+	char finalGrade[GRADECNT];
+	char Alpha[ALPHACNT];
+	char AlphaLocation[ALPHACNT];
+} GameOver;
+
 typedef struct {
 	int menuSel;
 	int modeSel;
 	bool optionSel[4];
+	GameOver go;
 }SceneManager;
 
 void SceneInit();
 void LoadingScene();
 void MenuScene();
+void ScoreDraw();
+void ComboDraw();
+void GradeDraw();
+void AlphaDraw();
 
 #endif /* SCENE_H_ */

@@ -46,7 +46,6 @@ void InputAction() {
 	else if(sti->IM.push) {
 		push_data = (~GPIO_READ(GPIO_PORTP, (0x01 << 1)) >> 1) & (~GPIO_READ(GPIO_PORTN, (0x01 << 3)) >> 2) & \
 						  	(~GPIO_READ(GPIO_PORTE, (0x01 << 5)) >> 3) & (~GPIO_READ(GPIO_PORTK, (0x01 << 7)) >> 4);
-		int i;
 		if (push_data & 0x1) {
 			sti->IM.input[0] = true;
 		}

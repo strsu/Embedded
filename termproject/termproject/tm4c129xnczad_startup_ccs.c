@@ -56,6 +56,9 @@ extern uint32_t __STACK_TOP;
 //*****************************************************************************
 // To be added by user
 extern void TouchScreenIntHandler(void);
+extern void _user_PWMTimer0Int(void);
+extern void _user_Bluetooth_Interrupt_Handler(void);
+extern void WDTinitISR(void);
 // push
 extern void _user_interrupt_handler_1(void);
 extern void _user_interrupt_handler_2(void);
@@ -110,8 +113,8 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // ADC Sequence 0
     IntDefaultHandler,                      // ADC Sequence 1
     IntDefaultHandler,                      // ADC Sequence 2
-	IntDefaultHandler,                      // ADC Sequence 3
-    IntDefaultHandler,                      // Watchdog timer	34
+	TouchScreenIntHandler,                      // ADC Sequence 3
+	WDTinitISR,                      // Watchdog timer	34
     IntDefaultHandler,                      // Timer 0 subtimer A
     IntDefaultHandler,                      // Timer 0 subtimer B
     IntDefaultHandler,                      // Timer 1 subtimer A
@@ -149,7 +152,7 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // GPIO Port L
     IntDefaultHandler,                      // SSI2 Rx and Tx
     IntDefaultHandler,                      // SSI3 Rx and Tx
-    IntDefaultHandler,    					// _user_Bluetooth_Interrupt_Handler,                      // UART3 Rx and Tx
+	_user_Bluetooth_Interrupt_Handler,    					// _user_Bluetooth_Interrupt_Handler,                      // UART3 Rx and Tx
     IntDefaultHandler,                      // UART4 Rx and Tx
     IntDefaultHandler,                      // UART5 Rx and Tx
     IntDefaultHandler,                      // UART6 Rx and Tx

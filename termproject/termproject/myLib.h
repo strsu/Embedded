@@ -73,6 +73,9 @@ void SetFullFrame();
 
 void DrawRect(int x1, int y1, int x2, int y2, int color);
 void DrawCircle(int nCenterX,int nCenterY, int nRadius,int color);
+void DrawTriangle(int nCenterX,int nCenterY, int nRadius,int color);
+void DrawCheck(int nCenterX,int nCenterY, int color);
+void MoveRect(int x1, int y1, int x2, int y2, int move, int color, int backColor);
 void MoveCircle(int nCenterX,int nCenterY, int nRadius,int color);
 
 void BUZZER_init();
@@ -83,6 +86,7 @@ void BUZZER_clear();
 void Play(int freq);
 void DelayForPlay(int DLY);
 void WDTinitISR(void);
+void MyWDTinitISR(void);
 
 void FND_clear();
 void FND_init();
@@ -95,12 +99,23 @@ void PUSH_init();
 void DIP_init();
 
 void UART_init(float BRD, int BRDI, int BRDF);
-
 char UART_getch(void);
-
 char UART_getkey(void);
 void UART_putch(uint8_t data);
 void UART_putstr(char* pt);
 void UART_printf(char *fmt, ...);
+
+void Bluetooth_init(float BRD, int BRDI, int BRDF);
+char Bluetooth_GetCh(void);
+char Bluetooth_GetKey(void);
+void Bluetooth_PutCh(uint8_t data);
+void Bluetooth_PutStr(char* pt);
+void Bluetooth_Printf(char *fmt,...);
+
+void PWM_Init(uint32_t ui32SysClock);
+void RTC_Init(void);
+void PWM0_Interrupt_Enable(void);
+void PWM0_Interrupt_Disable(void);
+void Port_Init(void);
 
 #endif /* _MYLIB_H_ */

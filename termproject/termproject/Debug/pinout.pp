@@ -37,6 +37,7 @@ pinout.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/rom_map.h
 pinout.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/timer.h
 pinout.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/grlib.h
 pinout.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h
+pinout.obj: ../touch.h
 
 ../pinout.c: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stdbool.h: 
@@ -75,3 +76,4 @@ C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/rom_map.h:
 C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/timer.h: 
 C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/grlib.h: 
 C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h: 
+../touch.h: 

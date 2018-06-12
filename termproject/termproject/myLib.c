@@ -1056,8 +1056,56 @@ void DrawCircle(int nCenterX,int nCenterY, int nRadius,int color){
 	}
 }
 
+void DrawTriangle(int nCenterX,int nCenterY, int nRadius,int color) {
+	int i, j;
+	for(i=0;i<nRadius;i++) {
+		for(j=0;j<nRadius-i;j++) {
+			PutPixel(nCenterX+i, nCenterY+j, color);
+		}
+	}
+}
+
+void DrawCheck(int nCenterX,int nCenterY,int color) {
+	int i, j;
+	int len = 10;
+	for(i=0;i<=len;i++) {
+		PutPixel(nCenterX-len+i, nCenterY+len-i, color);
+		PutPixel(nCenterX-len+i, nCenterY+len+1-i, color);
+
+		PutPixel(nCenterX+len-i, nCenterY+len-i, color);
+		PutPixel(nCenterX+len-i, nCenterY+len+1-i, color);
+	}
+}
+
 void MoveCircle(int nCenterX,int nCenterY, int nRadius,int color) {
 
+}
+
+void MoveRect(int x1, int y1, int x2, int y2, int move, int color, int backColor) {
+
+	int push_data = (~GPIO_READ(GPIO_PORTP, (0x01 << 1)) >> 1) & (~GPIO_READ(GPIO_PORTN, (0x01 << 3)) >> 2) & \
+						(~GPIO_READ(GPIO_PORTE, (0x01 << 5)) >> 3) & (~GPIO_READ(GPIO_PORTK, (0x01 << 7)) >> 4);
+			if(push_data & 0x1) {	// ¿ÞÂÊ
+				if(x1 <= 0) return;
+				x1-=move; x2-=move;
+				DrawRect(x1, y1, x2, y2, color);
+				DrawRect(x2, y1, x2+move, y2, backColor);
+			} else if (push_data & 0x2) {
+				if(x2 >= 480) return;
+				x1+=move; x2+=move;
+				DrawRect(x1, y1, x2, y2, color);
+				DrawRect(x1-move, y1, x1, y2, backColor);
+			} else if (push_data & 0x4) {	// À§·Î
+				if(y2 >= 272) return;
+				y1+=move; y2+=move;
+				DrawRect(x1, y1, x2, y2, color);
+				DrawRect(x1, y1-move, x2, y1, backColor);
+			} else if (push_data & 0x8) {
+				if(y1 <= 0) return;
+				y1-=move; y2-=move;
+				DrawRect(x1, y1, x2, y2, color);
+				DrawRect(x1, y2, x2, y2+move, backColor);
+			}
 }
 
 void BUZZER_init(){
@@ -1164,6 +1212,12 @@ void DelayForPlay(int DLY){
 void WDTinitISR(void){
 	// WDT
 	WDT1ICR = 0x1;
+}
+
+void MyWDTinitISR(void){
+	// WDT
+	WDT1ICR = 0x1;
+
 }
 
 void FND_init(){
@@ -1425,4 +1479,239 @@ void UART_printf(char *fmt, ...) {
 	va_end(ap);
 }
 
+void Bluetooth_init(float BRD, int BRDI, int BRDF) {
+	//UART Run Mode Clock Gating control(p.406)
+	RCGCUART = RCGCUART | (0x01 << 0) | (0x01 << 3);
+	//GPIO Run Mode Clock Gating control(p.400)
+	RCGCGPIO = RCGCGPIO | (0x01 << 0) | (0x01 << 8);
 
+	//(p.806)
+	GPIO_PORTA_AFSEL = GPIO_PORTA_AFSEL | PIN0 | PIN1;
+	GPIO_PORTJ_AFSEL = GPIO_PORTJ_AFSEL | PIN0 | PIN1;
+
+	//peripheral configuration (p.836)
+	GPIO_PORTA_PC = GPIO_PORTA_PC | 0xF;
+	GPIO_PORTJ_PC = GPIO_PORTJ_PC | 0xF;
+
+	//drive control register setting(slew rate control) (p.808~810, p.816, p.828)
+	GPIO_PORTA_DR2R = GPIO_PORTA_DR2R & (~(PIN0 | PIN1));
+	GPIO_PORTJ_DR2R = GPIO_PORTJ_DR2R & (~(PIN0 | PIN1));
+
+	GPIO_PORTA_DR4R = GPIO_PORTA_DR4R | PIN0 | PIN1;
+	GPIO_PORTJ_DR4R = GPIO_PORTJ_DR4R | PIN0 | PIN1;
+
+	GPIO_PORTA_DR8R = GPIO_PORTA_DR8R & (~(PIN0 | PIN1));
+	GPIO_PORTJ_DR8R = GPIO_PORTJ_DR8R & (~(PIN0 | PIN1));
+
+	GPIO_PORTA_SLR = GPIO_PORTA_SLR & (~(PIN0 | PIN1));
+	GPIO_PORTJ_SLR = GPIO_PORTJ_SLR & (~(PIN0 | PIN1));
+
+	GPIO_PORTA_DR12R = GPIO_PORTA_DR12R & (~(PIN0 | PIN1));
+	GPIO_PORTJ_DR12R = GPIO_PORTJ_DR12R & (~(PIN0 | PIN1));
+
+	//port control register (p.823)
+	GPIO_PORTA_PCTL = GPIO_PORTA_PCTL | 0x11;
+	GPIO_PORTJ_PCTL = GPIO_PORTJ_PCTL | 0x11;
+
+	GPIO_PORTA_DEN = GPIO_PORTA_DEN | PIN0 | PIN1;
+	GPIO_PORTJ_DEN = GPIO_PORTJ_DEN | PIN0 | PIN1;
+
+	//UART Control(p.1343)
+	UARTCTL_UART0 = 0x300;	// uart
+	UARTCTL_UART3 = 0x300;	// blue
+
+	UARTIBRD_UART0 = BRDI;
+	UARTIBRD_UART3 = BRDI;
+
+	UARTFBRD_UART0 = BRDF;
+	UARTFBRD_UART3 = BRDF;
+
+	//Uart Line Control(p.1341)
+	UARTLCRH_UART0 = 0x60;
+	UARTLCRH_UART3 = 0x60;
+
+	//UART clock source(p.1368)
+	UARTCC_UART0 = 0;
+	UARTCC_UART3 = 0;
+
+	UARTCTL_UART0 = 0x301;
+	UARTCTL_UART3 = 0x301;
+
+	UART3IM = UART3IM | (0x1 << 4);	// Uart Receive Interrupt Mask
+	UART3ICR = UART3ICR | (0x31fff << 4);
+	INTEN1 = 0x01 << (56 - 32);		// UART3 Interrupt  Enable
+
+}
+
+char Bluetooth_GetCh(void) {
+	while (!(UART3FR & 0x40));
+	return UART3_DATA;
+}
+
+char Bluetooth_GetKey(void) {
+	if (!(UART3FR & 0x40)) {
+		return 0;
+	} else
+		return UART3_DATA;
+}
+
+void Bluetooth_PutCh(uint8_t data) {
+	UART3_DATA = data;
+	while (!(UART3FR & 0x80));
+}
+
+
+void Bluetooth_PutStr(char* pt) {
+	while (*pt)
+		UART_putch(*pt++);
+}
+
+void Bluetooth_Printf(char *fmt, ...) {
+	va_list ap;
+	char ch_buffer[256];
+
+	va_start(ap, fmt);
+	vsprintf(ch_buffer, (const char*) fmt, ap);
+
+	UART_putstr(ch_buffer);
+	va_end(ap);
+}
+
+void RTC_Init(void) {
+	//Hibernation Control(p.590)
+	HIBCTL = HIBCTL | 0x40;
+	while (!(HIBCTL & 0x80000000));
+	//Hibernation Peripheral Present(p.343)
+	PPHIB = 1;
+
+	//Hibernation Control(p.590)
+	HIBCTL = HIBCTL | 0x141;
+	while (!(HIBCTL & 0x80000000));
+	HIBCALCTL = 0x5;
+
+	//(p.619)
+	HIBLOCK = 0xA3359554;
+	while (!(HIBCTL & 0x80000000));
+	HIBCALLD0 = (12 << 16) | (0 << 8) | 0;
+	while (!(HIBCTL & 0x80000000));
+	HIBCALLD1 = (0x0 << 24) | (15 << 16) | (3 << 8) | 2;
+	while (!(HIBCTL & 0x80000000));
+
+	HIBLOCK = 0;
+	while (!(HIBCTL & 0x80000000));
+
+
+	RCGCUART = RCGCUART | UART0;
+	RCGCHIB = 1;
+	RCGCGPIO = RCGCGPIO | GPIO_RUN_A | GPIO_RUN_P;
+
+	GPIO_PORTP_DIR = GPIO_PORTP_DIR & ~(PIN1);
+	GPIO_PORTA_AFSEL = GPIO_PORTA_AFSEL | PIN0 | PIN1;
+	GPIO_PORTP_AFSEL = GPIO_PORTP_AFSEL & (~PIN1);
+	GPIO_PORTA_PC = GPIO_PORTA_PC | 0xF;
+
+	GPIO_PORTA_DR2R = GPIO_PORTA_DR2R & (~(PIN0 | PIN1));
+	GPIO_PORTA_DR4R = GPIO_PORTA_DR4R | PIN0 | PIN1;
+	GPIO_PORTA_DR8R = GPIO_PORTA_DR8R & (~(PIN0 | PIN1));
+	GPIO_PORTA_DR12R = GPIO_PORTA_DR12R & (~(PIN0 | PIN1));
+	GPIO_PORTA_SLR = GPIO_PORTA_SLR & (~(PIN0 | PIN1));
+
+	GPIO_PORTA_PCTL = GPIO_PORTA_PCTL | 0x11;
+	GPIO_PORTA_DEN = GPIO_PORTA_DEN | PIN0 | PIN1;
+	GPIO_PORTP_DEN = GPIO_PORTP_DEN | PIN1;
+}
+
+void Port_Init(void) {
+	//GPIO Run Mode Clock Gating control(p.400)
+	RCGCGPIO = RCGCGPIO | GPIO_RUN_F | GPIO_RUN_J | GPIO_RUN_N | GPIO_RUN_R
+			| GPIO_RUN_S | GPIO_RUN_T;
+
+	//LCD Run Mode Clock Gating control(p.420)
+	RCGCLCD = 1;
+
+	//direction (p.795)
+	GPIO_PORTF_DIR = GPIO_PORTF_DIR & (~(PIN7));
+	GPIO_PORTJ_DIR = GPIO_PORTJ_DIR & (~(PIN2 | PIN3 | PIN6));
+	GPIO_PORTN_DIR = GPIO_PORTN_DIR & (~(PIN6 | PIN7));
+	GPIO_PORTR_DIR = GPIO_PORTR_DIR
+			& (~(PIN0 | PIN1 | PIN2 | PIN3 | PIN4 | PIN5 | PIN6 | PIN7));
+	GPIO_PORTS_DIR = GPIO_PORTS_DIR & (~(PIN4 | PIN5 | PIN6 | PIN7));
+	GPIO_PORTT_DIR = GPIO_PORTT_DIR & (~(PIN0 | PIN1));
+
+	//Alternate Function Select(p.806)
+	GPIO_PORTF_AFSEL = GPIO_PORTF_AFSEL | PIN7;
+	GPIO_PORTJ_AFSEL = GPIO_PORTJ_AFSEL | PIN2 | PIN3 | PIN6;
+	GPIO_PORTN_AFSEL = GPIO_PORTN_AFSEL | PIN6 | PIN7;
+	GPIO_PORTR_AFSEL = GPIO_PORTR_AFSEL | PIN0 | PIN1 | PIN2 | PIN3 | PIN4
+			| PIN5 | PIN6 | PIN7;
+	GPIO_PORTS_AFSEL = GPIO_PORTS_AFSEL | PIN4 | PIN5 | PIN6 | PIN7;
+	GPIO_PORTT_AFSEL = GPIO_PORTT_AFSEL | PIN0 | PIN1;
+
+	//port control register (p.823)
+	GPIO_PORTF_PCTL = GPIO_PORTF_PCTL | 0xF0000000;
+	GPIO_PORTJ_PCTL = GPIO_PORTJ_PCTL | 0x0F00FF00;
+	GPIO_PORTN_PCTL = GPIO_PORTN_PCTL | 0xFF000000;
+	GPIO_PORTR_PCTL = GPIO_PORTR_PCTL | 0xFFFFFFFF;
+	GPIO_PORTS_PCTL = GPIO_PORTS_PCTL | 0xFFFF0000;
+	GPIO_PORTT_PCTL = GPIO_PORTS_PCTL | 0x000000FF;
+
+	//peripheral configuration (p.836)
+	GPIO_PORTF_PC = GPIO_PORTF_PC | 0xC000;
+	GPIO_PORTJ_PC = GPIO_PORTJ_PC | 0x30F0;
+	GPIO_PORTN_PC = GPIO_PORTN_PC | 0xF000;
+	GPIO_PORTR_PC = GPIO_PORTR_PC | 0xFFFF;
+	GPIO_PORTS_PC = GPIO_PORTS_PC | 0xFF00;
+	GPIO_PORTT_PC = GPIO_PORTT_PC | 0x000F;
+
+	//drive control register setting(slew rate control) (p.808~810, p.816, p.828)
+	GPIO_PORTF_DR2R = GPIO_PORTF_DR2R & (~(PIN7));
+	GPIO_PORTJ_DR2R = GPIO_PORTJ_DR2R & (~(PIN2 | PIN3 | PIN6));
+	GPIO_PORTN_DR2R = GPIO_PORTN_DR2R & (~(PIN6 | PIN7));
+	GPIO_PORTR_DR2R = GPIO_PORTR_DR2R
+			& (~(PIN0 | PIN1 | PIN2 | PIN3 | PIN4 | PIN5 | PIN6 | PIN7));
+	GPIO_PORTS_DR2R = GPIO_PORTS_DR2R & (~(PIN4 | PIN5 | PIN6 | PIN7));
+	GPIO_PORTT_DR2R = GPIO_PORTT_DR2R & (~(PIN0 | PIN1));
+
+	GPIO_PORTF_DR4R = GPIO_PORTF_DR4R | PIN7;
+	GPIO_PORTJ_DR4R = GPIO_PORTJ_DR4R | PIN2 | PIN3 | PIN6;
+	GPIO_PORTN_DR4R = GPIO_PORTN_DR4R | PIN6 | PIN7;
+	GPIO_PORTR_DR4R = GPIO_PORTR_DR4R | PIN0 | PIN1 | PIN2 | PIN3 | PIN4 | PIN5
+			| PIN6 | PIN7;
+	GPIO_PORTS_DR4R = GPIO_PORTS_DR4R | PIN4 | PIN5 | PIN6 | PIN7;
+	GPIO_PORTT_DR4R = GPIO_PORTT_DR4R | PIN0 | PIN1;
+
+	GPIO_PORTF_DR8R = GPIO_PORTF_DR8R | PIN7;
+	GPIO_PORTJ_DR8R = GPIO_PORTJ_DR8R | PIN2 | PIN3 | PIN6;
+	GPIO_PORTN_DR8R = GPIO_PORTN_DR8R | PIN6 | PIN7;
+	GPIO_PORTR_DR8R = GPIO_PORTR_DR8R | PIN0 | PIN1 | PIN2 | PIN3 | PIN4 | PIN5
+			| PIN6 | PIN7;
+	GPIO_PORTS_DR8R = GPIO_PORTS_DR8R | PIN4 | PIN5 | PIN6 | PIN7;
+	GPIO_PORTT_DR8R = GPIO_PORTT_DR8R | PIN0 | PIN1;
+
+	GPIO_PORTF_SLR = GPIO_PORTF_SLR & (~(PIN7));
+	GPIO_PORTJ_SLR = GPIO_PORTJ_SLR & (~(PIN2 | PIN3 | PIN6));
+	GPIO_PORTN_SLR = GPIO_PORTN_SLR & (~(PIN6 | PIN7));
+	GPIO_PORTR_SLR = GPIO_PORTR_SLR
+			& (~(PIN0 | PIN1 | PIN2 | PIN3 | PIN4 | PIN5 | PIN6 | PIN7));
+	GPIO_PORTS_SLR = GPIO_PORTS_SLR & (~(PIN4 | PIN5 | PIN6 | PIN7));
+	GPIO_PORTT_SLR = GPIO_PORTT_SLR & (~(PIN0 | PIN1));
+
+	GPIO_PORTF_DR12R = GPIO_PORTF_DR12R & (~(PIN7));
+	GPIO_PORTJ_DR12R = GPIO_PORTJ_DR12R & (~(PIN2 | PIN3 | PIN6));
+	GPIO_PORTN_DR12R = GPIO_PORTN_DR12R & (~(PIN6 | PIN7));
+	GPIO_PORTR_DR12R = GPIO_PORTR_DR12R
+			& (~(PIN0 | PIN1 | PIN2 | PIN3 | PIN4 | PIN5 | PIN6 | PIN7));
+	GPIO_PORTS_DR12R = GPIO_PORTS_DR12R & (~(PIN4 | PIN5 | PIN6 | PIN7));
+	GPIO_PORTT_DR12R = GPIO_PORTT_DR12R & (~(PIN0 | PIN1));
+
+	//Digital enable (p.817)
+	GPIO_PORTF_DEN = GPIO_PORTF_DEN | PIN7;
+	GPIO_PORTJ_DEN = GPIO_PORTJ_DEN | PIN2 | PIN3 | PIN6;
+	GPIO_PORTN_DEN = GPIO_PORTN_DEN | PIN6 | PIN7;
+	GPIO_PORTR_DEN = GPIO_PORTR_DEN | PIN0 | PIN1 | PIN2 | PIN3 | PIN4 | PIN5 | PIN6 | PIN7;
+	GPIO_PORTS_DEN = GPIO_PORTS_DEN | PIN4 | PIN5 | PIN6 | PIN7;
+	GPIO_PORTT_DEN = GPIO_PORTT_DEN | PIN0 | PIN1;
+	///////////////////////////////////////////////////////////////////////////////
+
+
+}

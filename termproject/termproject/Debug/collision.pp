@@ -42,6 +42,7 @@ collision.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/timer.h
 collision.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/pin_map.h
 collision.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/grlib.h
 collision.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h
+collision.obj: ../touch.h
 collision.obj: ../Bar.h
 collision.obj: ../input.h
 collision.obj: ../Note.h
@@ -91,6 +92,7 @@ C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/timer.h:
 C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/pin_map.h: 
 C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/grlib.h: 
 C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h: 
+../touch.h: 
 ../Bar.h: 
 ../input.h: 
 ../Note.h: 

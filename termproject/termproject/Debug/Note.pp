@@ -40,6 +40,7 @@ Note.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/timer.h
 Note.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/pin_map.h
 Note.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/grlib.h
 Note.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h
+Note.obj: ../touch.h
 Note.obj: ../SingleTon.h
 Note.obj: ../screen.h
 Note.obj: ../Bar.h
@@ -89,6 +90,7 @@ C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/timer.h:
 C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/pin_map.h: 
 C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/grlib.h: 
 C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h: 
+../touch.h: 
 ../SingleTon.h: 
 ../screen.h: 
 ../Bar.h: 

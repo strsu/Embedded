@@ -21,7 +21,8 @@ C_SRCS += \
 ../scene.c \
 ../score.c \
 ../screen.c \
-../tm4c129xnczad_startup_ccs.c 
+../tm4c129xnczad_startup_ccs.c \
+../touch.c 
 
 OBJS += \
 ./Bar.obj \
@@ -38,7 +39,8 @@ OBJS += \
 ./scene.obj \
 ./score.obj \
 ./screen.obj \
-./tm4c129xnczad_startup_ccs.obj 
+./tm4c129xnczad_startup_ccs.obj \
+./touch.obj 
 
 C_DEPS += \
 ./Bar.pp \
@@ -55,7 +57,8 @@ C_DEPS += \
 ./scene.pp \
 ./score.pp \
 ./screen.pp \
-./tm4c129xnczad_startup_ccs.pp 
+./tm4c129xnczad_startup_ccs.pp \
+./touch.pp 
 
 C_DEPS__QUOTED += \
 "Bar.pp" \
@@ -72,7 +75,8 @@ C_DEPS__QUOTED += \
 "scene.pp" \
 "score.pp" \
 "screen.pp" \
-"tm4c129xnczad_startup_ccs.pp" 
+"tm4c129xnczad_startup_ccs.pp" \
+"touch.pp" 
 
 OBJS__QUOTED += \
 "Bar.obj" \
@@ -89,7 +93,8 @@ OBJS__QUOTED += \
 "scene.obj" \
 "score.obj" \
 "screen.obj" \
-"tm4c129xnczad_startup_ccs.obj" 
+"tm4c129xnczad_startup_ccs.obj" \
+"touch.obj" 
 
 C_SRCS__QUOTED += \
 "../Bar.c" \
@@ -106,6 +111,7 @@ C_SRCS__QUOTED += \
 "../scene.c" \
 "../score.c" \
 "../screen.c" \
-"../tm4c129xnczad_startup_ccs.c" 
+"../tm4c129xnczad_startup_ccs.c" \
+"../touch.c" 
 
 

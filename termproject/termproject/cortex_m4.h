@@ -31,6 +31,7 @@
 #include "driverlib/pin_map.h"
 #include "grlib/grlib.h"
 #include "grlib/widget.h"
+#include "touch.h"
 
 #define PIN0  (0x01)
 #define PIN1  (0x01 << 1)

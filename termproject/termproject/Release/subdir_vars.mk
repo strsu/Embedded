@@ -14,11 +14,15 @@ C_SRCS += \
 ../collision.c \
 ../input.c \
 ../main.c \
+../music.c \
 ../myLib.c \
 ../pinout.c \
 ../play.c \
+../scene.c \
+../score.c \
 ../screen.c \
-../tm4c129xnczad_startup_ccs.c 
+../tm4c129xnczad_startup_ccs.c \
+../touch.c 
 
 OBJS += \
 ./Bar.obj \
@@ -28,11 +32,15 @@ OBJS += \
 ./collision.obj \
 ./input.obj \
 ./main.obj \
+./music.obj \
 ./myLib.obj \
 ./pinout.obj \
 ./play.obj \
+./scene.obj \
+./score.obj \
 ./screen.obj \
-./tm4c129xnczad_startup_ccs.obj 
+./tm4c129xnczad_startup_ccs.obj \
+./touch.obj 
 
 C_DEPS += \
 ./Bar.pp \
@@ -42,11 +50,15 @@ C_DEPS += \
 ./collision.pp \
 ./input.pp \
 ./main.pp \
+./music.pp \
 ./myLib.pp \
 ./pinout.pp \
 ./play.pp \
+./scene.pp \
+./score.pp \
 ./screen.pp \
-./tm4c129xnczad_startup_ccs.pp 
+./tm4c129xnczad_startup_ccs.pp \
+./touch.pp 
 
 C_DEPS__QUOTED += \
 "Bar.pp" \
@@ -56,11 +68,15 @@ C_DEPS__QUOTED += \
 "collision.pp" \
 "input.pp" \
 "main.pp" \
+"music.pp" \
 "myLib.pp" \
 "pinout.pp" \
 "play.pp" \
+"scene.pp" \
+"score.pp" \
 "screen.pp" \
-"tm4c129xnczad_startup_ccs.pp" 
+"tm4c129xnczad_startup_ccs.pp" \
+"touch.pp" 
 
 OBJS__QUOTED += \
 "Bar.obj" \
@@ -70,11 +86,15 @@ OBJS__QUOTED += \
 "collision.obj" \
 "input.obj" \
 "main.obj" \
+"music.obj" \
 "myLib.obj" \
 "pinout.obj" \
 "play.obj" \
+"scene.obj" \
+"score.obj" \
 "screen.obj" \
-"tm4c129xnczad_startup_ccs.obj" 
+"tm4c129xnczad_startup_ccs.obj" \
+"touch.obj" 
 
 C_SRCS__QUOTED += \
 "../Bar.c" \
@@ -84,10 +104,14 @@ C_SRCS__QUOTED += \
 "../collision.c" \
 "../input.c" \
 "../main.c" \
+"../music.c" \
 "../myLib.c" \
 "../pinout.c" \
 "../play.c" \
+"../scene.c" \
+"../score.c" \
 "../screen.c" \
-"../tm4c129xnczad_startup_ccs.c" 
+"../tm4c129xnczad_startup_ccs.c" \
+"../touch.c" 
 
 
