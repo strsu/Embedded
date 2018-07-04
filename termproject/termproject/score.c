@@ -17,6 +17,15 @@ SingleTon *sts;
 
 void ScoreInit() {
 	sts = getSingleTon();
+	sts->SCOREM.buzzerCnt = 2;
+	sts->SCOREM.score = 0;
+	sts->SCOREM.combo = 0;
+	sts->SCOREM.maxCombo = 0;
+	sts->SCOREM.hp = 100;
+}
+
+void ScoreInit2() {
+	sts->SCOREM.buzzerCnt = 2;
 	sts->SCOREM.score = 0;
 	sts->SCOREM.combo = 0;
 	sts->SCOREM.maxCombo = 0;
@@ -28,25 +37,26 @@ void ScoreUpdate() {
 	ScoreProcess();
 }
 
-void ScoreAction() {
+void ScoreAction() {	// combo 처리도 함계 해줌
 	int i;
 	for (i = 0; i < KEYMAX; i++) {
-		if (sts->COLM.CLIS_Y[i] == -2) {
-			GPIO_WRITE(GPIO_PORTL, 0xf, 0);
-			GPIO_WRITE(GPIO_PORTM, 0xf, 0);
-			sts->SCOREM.combo = 0;
-			continue;
-		}
-		if (sts->COLM.CLIS_Y[i] >= BARHEIGHT / 2) {
+		if (sts->COLM.CLIS_Y[i] >= BARHEIGHT / 2) {	// cool
+			strcpy(sts->SCENEM.musiclist, "cool 1111111111111");
+			AlphaDraw(340, 240);
+			strcpy(sts->SCENEM.musiclist, "                  ");
+			AlphaDraw(340, 240);
 			sts->SCOREM.score += 10 + sts->SCOREM.combo % 30;
-			GPIO_WRITE(GPIO_PORTL, 0xf, 1);
-		}
-		else if (sts->COLM.CLIS_Y[i] >= BARHEIGHT / 4) {
+			sts->SCOREM.combo += 1;
+		} else
+		if (sts->COLM.CLIS_Y[i] >= BARHEIGHT / 8) {	// great
+			strcpy(sts->SCENEM.musiclist, "great1111111111111");
+			AlphaDraw(340, 240);
+			strcpy(sts->SCENEM.musiclist, "              ");
+			AlphaDraw(340, 240);
 			sts->SCOREM.score += 20 + sts->SCOREM.combo % 50;
-			GPIO_WRITE(GPIO_PORTM, 0xf, 1);
+			sts->SCOREM.combo += 1;
 		}
 		sts->COLM.CLIS_Y[i] = -1;	// 충돌값 비활성
-		sts->SCOREM.combo++;
 	}
 	if (sts->SCOREM.maxCombo <= sts->SCOREM.combo) {
 		sts->SCOREM.maxCombo = sts->SCOREM.combo;

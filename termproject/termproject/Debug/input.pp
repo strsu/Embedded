@@ -49,6 +49,9 @@ input.obj: ../collision.h
 input.obj: ../score.h
 input.obj: ../scene.h
 input.obj: ../music.h
+input.obj: ../ui.h
+input.obj: ../buzzer.h
+input.obj: ../sound.h
 
 ../input.c: 
 ../input.h: 
@@ -99,3 +102,6 @@ C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h:
 ../score.h: 
 ../scene.h: 
 ../music.h: 
+../ui.h: 
+../buzzer.h: 
+../sound.h: 

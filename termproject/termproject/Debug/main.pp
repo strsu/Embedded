@@ -49,10 +49,15 @@ main.obj: ../collision.h
 main.obj: ../score.h
 main.obj: ../scene.h
 main.obj: ../music.h
+main.obj: ../ui.h
+main.obj: ../buzzer.h
+main.obj: ../sound.h
 main.obj: ../report7.h
 main.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/math.h
 main.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/ymath.h
 main.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/float.h
+main.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/time.h
+main.obj: C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stdlib.h
 
 ../main.c: 
 ../SingleTon.h: 
@@ -103,7 +108,12 @@ C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h:
 ../score.h: 
 ../scene.h: 
 ../music.h: 
+../ui.h: 
+../buzzer.h: 
+../sound.h: 
 ../report7.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/math.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/ymath.h: 
 C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/float.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/time.h: 
+C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.5/include/stdlib.h: 

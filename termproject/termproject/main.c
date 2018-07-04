@@ -1,6 +1,8 @@
 #include "SingleTon.h"
 #include "report7.h"
 #include "math.h"
+#include "time.h"
+#include "stdlib.h"
 
 #define COLOR_BLUE		0x001f
 #define COLOR_GREEN		0x07E0
@@ -20,11 +22,17 @@ void _user_interrupt_handler_2(void);
 void _user_interrupt_handler_3(void);
 void _user_interrupt_handler_4(void);
 void _user_Bluetooth_Interrupt_Handler(void);
+void MyWDTinitISR(void);
 int32_t PointerMessage(uint32_t ui32Message, int32_t i32X, int32_t i32Y);
 
 int cnt;
+int cntt;
 int move[2];
 int colors2[] = {0x001f, 0x07E0, 0xF800, 0x0000};
+
+int T_flag;
+
+SingleTon *stm;
 
 int main(void) {
 	g_ui32SysClock = SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
@@ -55,7 +63,6 @@ int main(void) {
 
 
 	UART_init(BRD, BRDI, BRDF);
-	Bluetooth_init(BRD, BRDI, BRDF);
 
 	UART_printf("//**************************************//\n\r");
 	UART_printf("//***********  Initialize  *************//\n\r");
@@ -85,6 +92,7 @@ int main(void) {
 	TIMER_init();
 	WDTinitISR();
 
+
 	//Touch
 	TouchScreenInit(g_ui32SysClock);
 	TouchScreenCallbackSet(PointerMessage);
@@ -97,6 +105,7 @@ int main(void) {
 	BUZZER_clear();
 
 	RTC_Init();
+	Bluetooth_init(BRD, BRDI, BRDF);
 
 	//********** Set Real Clock ************//
 		HIBLOCK = 0xA3359554;
@@ -122,46 +131,84 @@ int main(void) {
 		// HIBCTL = HIBCTL | 0x01;	// 타이머 활성
 		// HIBCTL = HIBCTL & ~0x01;	// 타이머 비활성
 
+		// RTC off 후 초기화 한 다음에 on
+
 	delay(1000000);
 
 	/* initial setting finish*/
 
 	// SingleTon init
+	T_flag = 1;
 	Init();
-	DrawRect(0,0,480,272,COLOR_WHITE);
-	//LoadingScene();
-	//DrawImage(buffer, 0, 0, 480, 272, BACKGROUND);
+	stm = getSingleTon();
+	WDT1CTL = 0x1;
+	WDT1ICR = 0x1;
+	MyWDTinitISR();
+	cntt = 0;
+	//DrawRect(0,0,480,272,COLOR_WHITE);
+	//DrawImage(buffer, 0, 0, 480, 272, MUSICTITLE);
 
-	//MenuScene();
-	//ScoreDraw();
-	//ComboDraw();
-	//GradeDraw();
-	//DrawImage(buffer, 0, 0, 12, 16, NUM0);
-	//DrawImage(buffer, 0, 0, 480, 272, BACKGROUND);
+/*
+	int getVal[6];
+	int val[3];
+	int lo=0;
 
-	while (1){
-		rtc_time0 = HIBCAL0;
-		rtc_time1 = HIBCAL1;
+		HIBLOCK = 0xA3359554;
 
-		WRITE_FND(0,((rtc_time0 >> 16) & 0x1f) / 10);
-		WRITE_FND_DOT(1,((rtc_time0 >> 16) & 0x1f) % 10);
-		WRITE_FND(2,((rtc_time0 >> 8) & 0x3f) / 10);
-		WRITE_FND_DOT(3,((rtc_time0 >> 8) & 0x3f) % 10);
-		WRITE_FND(4,((rtc_time0) & 0x3f) / 10);
-		WRITE_FND_DOT(5,((rtc_time0) & 0x3f) % 10);
-	}
+		HIBCTL = HIBCTL & ~0x01;	// 타이머 비활성
+
+		while(lo < 6) {
+			code = UART_getkey();
+			if(code) {
+				if(code >= '0' && code <= '9') {
+					UART_putch(code);
+					getVal[lo++] = code - '0';
+				}
+
+			}
+
+		}
+
+		val[0] = getVal[0]*10 + getVal[1];
+		val[1] = getVal[2]*10 + getVal[3];
+		val[2] = getVal[4]*10 + getVal[5];
+
+		while (!(HIBCTL & 0x80000000));
+		HIBCALLD0 = (val[0] << 16) | (val[1] << 8) | val[2];
+		while (!(HIBCTL & 0x80000000));
+
+		HIBLOCK = 0;
+		while (!(HIBCTL & 0x80000000));
+
+		HIBCTL = HIBCTL | 0x01;	// 타이머 활성*/
+
+		srand(HIBCAL0);
+			while(1) {
+				SceneUpdate();
+				//stm->random = rand();
+				//PlayUpdate();
+				//ScoreDraw();
+				/*
+				rtc_time0 = HIBCAL0;
+				rtc_time1 = HIBCAL1;
+				WRITE_FND(1,((rtc_time0 >> 16) & 0x1f) / 10);
+				WRITE_FND_DOT(2,((rtc_time0 >> 16) & 0x1f) % 10);
+				WRITE_FND(3,((rtc_time0 >> 8) & 0x3f) / 10);
+				WRITE_FND_DOT(4,((rtc_time0 >> 8) & 0x3f) % 10);
+				WRITE_FND(5,((rtc_time0) & 0x3f) / 10);
+				WRITE_FND_DOT(6,((rtc_time0) & 0x3f) % 10);
+				*/
+				//delay(10000000);
+			}
 
 
-	move[0] = 10;
-	move[1] = 10;
-	cnt = 0;
 	while (1) {
 		code = UART_getkey();
 			if(code >= 'a'-97 && code <= 'z'+5) {
 					Bluetooth_PutCh(code);
 				}
 
-		//noteView();
+		//Update();
 	}
 
 	while (1) {
@@ -250,37 +297,40 @@ void _user_interrupt_handler_4(void) {
 
 int32_t PointerMessage(uint32_t ui32Message, int32_t i32X, int32_t i32Y){
     if(user_X >= 0 && user_X < 480 && user_Y >= 0 && user_Y < 272){
-    	//prob_1((int)user_X, (int)user_Y);
-    	//prob_2((int)user_X, (int)user_Y);
-    	prob_3((int)user_X, (int)user_Y);
+    	if(T_flag == 0) {
+    		UART_printf("TEST 0 x : %d, y : %d \n\r", user_X, user_Y);
+			stm->touchX = user_X;
+			stm->touchY = user_Y;
+			T_flag = 1;
+		} else {
+			T_flag = 0;
+		}
+
     }
-    delay(1000000);
+    delay(500000);
 	return 0;
 }
 
 void _user_Bluetooth_Interrupt_Handler(void) {
 	char Bluetooth_Data;
 
-	int loX = 100;
-	int loY = 100;
-
 	UART3IM = UART3IM & ~(0x1 << 4);
 
 	Bluetooth_Data = Bluetooth_GetKey();	// 외부 장치로부터 받은 데이터를 저장
 	UART_putch(Bluetooth_Data);				// 터미널에 해당 데이터 출력
-	DrawRect(loX+move[0],loY+move[1],loX+20+move[0],loY+20+move[1],COLOR_WHITE);
-	switch(Bluetooth_Data) {
-	case 'w' : move[1]+=10; break;
-	case 's' : move[1]-=10; break;
-	case 'a' : move[0]-=10; break;
-	case 'd' : move[0]+=10; break;
-	case '1' : cnt = 0; break;
-	case '2' : cnt = 1; break;
-	case '3' : cnt = 2; break;
-	}
-	DrawRect(loX+move[0],loY+move[1],loX+20+move[0],loY+20+move[1],colors2[cnt]);
 
 	UART3IM = UART3IM | (0x1 << 4);
 	UART3ICR = UART3ICR | (0x1 << 4);
 	INTUNPEND1 = INTPEND1;
+}
+
+void MyWDTinitISR(void){
+	// WDT
+	// Watchdog Load(p.1185)
+	//WDT1LOAD = stm->BUZZERM.stayWithMEDLY[cntt] * 2000000;
+	//WDT1LOAD = stm->SOUNDM._WDT1LOAD;
+	while(!(WDT1CTL & 0x80000000));
+	WDT1LOAD = 5000000;
+	WDT1ICR = 0x1;
+	SoundUpdate();
 }

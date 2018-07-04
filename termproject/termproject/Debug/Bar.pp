@@ -49,6 +49,9 @@ Bar.obj: ../collision.h
 Bar.obj: ../score.h
 Bar.obj: ../scene.h
 Bar.obj: ../music.h
+Bar.obj: ../ui.h
+Bar.obj: ../buzzer.h
+Bar.obj: ../sound.h
 
 ../Bar.c: 
 ../Bar.h: 
@@ -99,3 +102,6 @@ C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h:
 ../score.h: 
 ../scene.h: 
 ../music.h: 
+../ui.h: 
+../buzzer.h: 
+../sound.h: 

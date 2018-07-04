@@ -20,7 +20,9 @@ typedef struct {
 }Buzzer;
 
 typedef struct {
-	int nowIndex;
+	int nowIndex;		// 노래 배열의 인덱스
+	bool BGM;
+	bool EFM;	// 효과음
 	MP3 mp3;
 	Buzzer buzzer;
 }MusicManager;

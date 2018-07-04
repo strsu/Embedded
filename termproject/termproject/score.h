@@ -14,7 +14,7 @@
 #define BARHEIGHT		32
 
 typedef struct {
-
+	int buzzerCnt;
 	int score;
 	int hp;
 	int combo;
@@ -22,6 +22,7 @@ typedef struct {
 } ScoreManager;
 
 void ScoreInit();
+void ScoreInit2();
 void ScoreUpdate();
 void ScoreAction();
 void ScoreProcess();

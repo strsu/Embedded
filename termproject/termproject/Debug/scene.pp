@@ -49,6 +49,9 @@ scene.obj: ../Note.h
 scene.obj: ../collision.h
 scene.obj: ../score.h
 scene.obj: ../music.h
+scene.obj: ../ui.h
+scene.obj: ../buzzer.h
+scene.obj: ../sound.h
 
 ../scene.c: 
 ../scene.h: 
@@ -99,3 +102,6 @@ C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h:
 ../collision.h: 
 ../score.h: 
 ../music.h: 
+../ui.h: 
+../buzzer.h: 
+../sound.h: 

@@ -40,6 +40,18 @@ myLib.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/pin_map.h
 myLib.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/grlib.h
 myLib.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h
 myLib.obj: ../touch.h
+myLib.obj: ../SingleTon.h
+myLib.obj: ../screen.h
+myLib.obj: ../Bar.h
+myLib.obj: ../input.h
+myLib.obj: ../Note.h
+myLib.obj: ../collision.h
+myLib.obj: ../score.h
+myLib.obj: ../scene.h
+myLib.obj: ../music.h
+myLib.obj: ../ui.h
+myLib.obj: ../buzzer.h
+myLib.obj: ../sound.h
 
 ../myLib.c: 
 ../myLib.h: 
@@ -81,3 +93,15 @@ C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/pin_map.h:
 C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/grlib.h: 
 C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h: 
 ../touch.h: 
+../SingleTon.h: 
+../screen.h: 
+../Bar.h: 
+../input.h: 
+../Note.h: 
+../collision.h: 
+../score.h: 
+../scene.h: 
+../music.h: 
+../ui.h: 
+../buzzer.h: 
+../sound.h: 

@@ -58,7 +58,7 @@ extern uint32_t __STACK_TOP;
 extern void TouchScreenIntHandler(void);
 extern void _user_PWMTimer0Int(void);
 extern void _user_Bluetooth_Interrupt_Handler(void);
-extern void WDTinitISR(void);
+extern void MyWDTinitISR(void);
 // push
 extern void _user_interrupt_handler_1(void);
 extern void _user_interrupt_handler_2(void);
@@ -114,7 +114,7 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // ADC Sequence 1
     IntDefaultHandler,                      // ADC Sequence 2
 	TouchScreenIntHandler,                      // ADC Sequence 3
-	WDTinitISR,                      // Watchdog timer	34
+	MyWDTinitISR,                      // Watchdog timer	34
     IntDefaultHandler,                      // Timer 0 subtimer A
     IntDefaultHandler,                      // Timer 0 subtimer B
     IntDefaultHandler,                      // Timer 1 subtimer A

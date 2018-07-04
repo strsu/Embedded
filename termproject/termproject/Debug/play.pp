@@ -50,6 +50,9 @@ play.obj: ../collision.h
 play.obj: ../score.h
 play.obj: ../scene.h
 play.obj: ../music.h
+play.obj: ../ui.h
+play.obj: ../buzzer.h
+play.obj: ../sound.h
 
 ../play.c: 
 ../play.h: 
@@ -101,3 +104,6 @@ C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h:
 ../score.h: 
 ../scene.h: 
 ../music.h: 
+../ui.h: 
+../buzzer.h: 
+../sound.h: 

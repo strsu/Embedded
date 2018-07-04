@@ -22,6 +22,15 @@ void NoteInit() {
 	}
 }
 
+void NoteInit2() {
+	int i;
+	stn->NM.speed = 8;
+	for (i = 0; i < NOTEMAX; i++) {
+		stn->NM.note[i].active       = false;
+		stn->NM.note[i].activeCnt  	 = stn->random % 40;
+	}
+}
+
 void NoteUpdate() {
 
 	NoteAction();
@@ -46,12 +55,12 @@ void NoteAction() {
 	int i, index;
 
 	for (i = 0; i < NOTEMAX; i++) {
-
+		stn->random = rand();
 		if (!stn->NM.note[i].active) {					// Note 가 비활성 이면
 			stn->NM.note[i].activeCnt--;
 			if (stn->NM.note[i].activeCnt < 0) {		// Note 생성 Delay 끝
-				index						=  i % 4;	// g_ui32SysClock % 4;
-				stn->NM.note[i].activeCnt	= 25 + ((i + 1) * 129) % 40;
+				index						=  stn->random % 4;	// g_ui32SysClock % 4;
+				stn->NM.note[i].activeCnt	= stn->random % 40;
 				AddNote(index);
 			}
 			continue;
@@ -59,8 +68,9 @@ void NoteAction() {
 		stn->NM.note[i].y -= stn->NM.speed;
 		// miss의 경우...
 		if (stn->NM.note[i].y <= 0) {
-			//g_ui32SysClock % 10;
 			stn->NM.note[i].active = false;
+			//strcpy(stn->SCENEM.musiclist, "miss 1111111111111");
+			//AlphaDraw(340, 240);
 		}
 	}
 }

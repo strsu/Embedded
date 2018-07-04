@@ -86,7 +86,6 @@ void BUZZER_clear();
 void Play(int freq);
 void DelayForPlay(int DLY);
 void WDTinitISR(void);
-void MyWDTinitISR(void);
 
 void FND_clear();
 void FND_init();

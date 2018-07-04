@@ -1,5 +1,6 @@
 #include "myLib.h"
 #include "cortex_m4.h"
+#include "SingleTon.h"
 
 #define DMA_EN
 #define QSPI_EN
@@ -1067,13 +1068,17 @@ void DrawTriangle(int nCenterX,int nCenterY, int nRadius,int color) {
 
 void DrawCheck(int nCenterX,int nCenterY,int color) {
 	int i, j;
-	int len = 10;
+	int len = 20;
 	for(i=0;i<=len;i++) {
 		PutPixel(nCenterX-len+i, nCenterY+len-i, color);
 		PutPixel(nCenterX-len+i, nCenterY+len+1-i, color);
+		PutPixel(nCenterX-len+i, nCenterY+len+2-i, color);
+		PutPixel(nCenterX-len+i, nCenterY+len+3-i, color);
 
 		PutPixel(nCenterX+len-i, nCenterY+len-i, color);
 		PutPixel(nCenterX+len-i, nCenterY+len+1-i, color);
+		PutPixel(nCenterX+len-i, nCenterY+len+2-i, color);
+		PutPixel(nCenterX+len-i, nCenterY+len+3-i, color);
 	}
 }
 
@@ -1212,12 +1217,6 @@ void DelayForPlay(int DLY){
 void WDTinitISR(void){
 	// WDT
 	WDT1ICR = 0x1;
-}
-
-void MyWDTinitISR(void){
-	// WDT
-	WDT1ICR = 0x1;
-
 }
 
 void FND_init(){

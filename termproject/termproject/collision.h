@@ -15,11 +15,12 @@
 #define KEYMAX			4
 
 typedef struct {
-	int CLIS_Y[4];
+	int CLIS_Y[4];	// 충돌시 y값
 }CollisionManager;
 
 void CollisionUpdate();
 void CollisionInit();
+void CollisionInit2();
 void CollisionUrteil();	/* Bar를 터치했을때 처리 함수 */
 
 #endif /* COLLISION_H_ */

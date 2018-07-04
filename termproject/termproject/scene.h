@@ -10,6 +10,8 @@
 
 #include "cortex_m4.h"
 
+#define BACKGROUND		0x80000
+
 #define LOADING			0x230000	// 10개 이미지 넣음 ~ 0x470000 
 #define GAMEMENU		0x4B0000
 #define GAMEABOUT		0x4F0000
@@ -70,7 +72,19 @@
 #define ALPHA_x			0xFF0000
 #define ALPHA_y			0x1030000
 #define ALPHA_z			0x1070000
-#define ALPHA__			0x10B0000	// 현재 마지막 이미지 주소
+#define ALPHA__			0x10B0000
+
+#define MUSICTITLE		0x10F0000
+#define MUSICOPTION		0x1130000  
+
+#define BACK_YES		0x1170000
+#define BACK_NO			0x11B0000	// 현재 마지막 이미지 주소
+
+#define BACKOPWIDTH			100
+#define BACKOPHEIGHT		40
+
+#define MUSICOPTIONWIDTH		440
+#define MUSICOPTIONHEIGHT		249
 
 #define ALPHAWIDTH		12
 #define ALPHAHEIGHT		16
@@ -86,18 +100,30 @@ typedef struct {
 } GameOver;
 
 typedef struct {
-	int menuSel;
-	int modeSel;
-	bool optionSel[4];
+	int sceneID;
+	char musiclist[50];
 	GameOver go;
 }SceneManager;
 
 void SceneInit();
+
 void LoadingScene();
 void MenuScene();
+void PlayScene();
+void OptionScene();
+void AboutScene();
+void BuzzerScene();
+void MP3Scene();
+void GameOverScene();
+
 void ScoreDraw();
 void ComboDraw();
 void GradeDraw();
-void AlphaDraw();
+void AlphaDraw(int Lx, int Ly);
+
+void PlayAlphaDraw(int Lx, int Ly);
+void PlayComboDraw();
+void PlayScoreDraw();
+
 
 #endif /* SCENE_H_ */

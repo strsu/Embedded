@@ -49,6 +49,9 @@ SingleTon.obj: ../collision.h
 SingleTon.obj: ../score.h
 SingleTon.obj: ../scene.h
 SingleTon.obj: ../music.h
+SingleTon.obj: ../ui.h
+SingleTon.obj: ../buzzer.h
+SingleTon.obj: ../sound.h
 
 ../SingleTon.c: 
 ../SingleTon.h: 
@@ -99,3 +102,6 @@ C:/ti/TivaWare_C_Series-2.1.0.12573/grlib/widget.h:
 ../score.h: 
 ../scene.h: 
 ../music.h: 
+../ui.h: 
+../buzzer.h: 
+../sound.h: 

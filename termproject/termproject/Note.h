@@ -2,7 +2,6 @@
 #define _NOTE_H_
 #pragma once
 
-#define BACKGROUND		0x80000
 #define NOTEIMAGE		0x130000
 #define NOTEMAX			12
 #define NOTEWIDTH		52
@@ -25,9 +24,11 @@ typedef struct {
 }NoteManager;
 
 void NoteInit();
+void NoteInit2();
 void NoteUpdate();
 void AddNote(int index);
 void NoteAction();
 void NoteDraw();
+
 
 #endif /* _NOTE_H_ */

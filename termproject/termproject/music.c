@@ -19,6 +19,8 @@ void MusicInit() {
 	stm = getSingleTon();
 	stm->MM.buzzer.delayCnt = 0;
 	stm->MM.nowIndex = 0;
+	stm->MM.BGM = true;
+	stm->MM.EFM = true;
 }
 
 void ScollBell() {
